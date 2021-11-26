@@ -12,4 +12,4 @@ def derivation(array, order=1):
     :return: derivation
     :rtype: numpy.ndarray
     """
-    return numpy.diff(array, order, axis=0)
+    return numpy.diff(array, order, axis=0) if isinstance(array, numpy.ndarray) else numpy.nan

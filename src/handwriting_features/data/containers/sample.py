@@ -123,7 +123,7 @@ class HandwritingSampleWrapper(object):
         ]
 
         # Assemble the velocity from the strokes
-        velocity = numpy.concatenate(velocity)
+        velocity = numpy.concatenate(velocity) if velocity else numpy.nan
 
         # Return the velocity
         return velocity

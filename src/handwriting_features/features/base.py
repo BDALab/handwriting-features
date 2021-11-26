@@ -132,18 +132,12 @@ class HandwritingFeaturesBase(object):
         # Handle the statistics options
         statistics = [statistics] if isinstance(statistics, str) else statistics
 
-        # Handle the array-wrapping of single-valued features
-        if not isinstance(feature, numpy.ndarray):
-            feature = numpy.array(feature).reshape((1,))
-
         # Compute the statistics
         if statistics:
-            if isinstance(feature, numpy.ndarray):
-                feature = numpy.array([Statistics.compute(feature, stat) for stat in statistics]) \
-                    if feature.size > 0 \
-                    else numpy.array([numpy.nan for _ in statistics])
-            else:
-                feature = numpy.array([feature for _ in statistics])
+            feature = numpy.array([Statistics.compute(feature, stat) for stat in statistics])
+        else:
+            if not isinstance(feature, numpy.ndarray):
+                feature = numpy.array(feature).reshape((1,))
 
         # Return the feature
         return feature
