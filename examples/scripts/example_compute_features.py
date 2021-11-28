@@ -6,17 +6,43 @@ from handwriting_features.features import HandwritingFeatures
 data_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "data")
 
 
+# Prepare the subject group
+subject_group = "HC-female"
+# subject_group = "HC-male"
+# subject_group = "PD-female"
+# subject_group = "PD-male"
+
+# Prepare the filename of the signal to be used
+signal_name = "00026_w.cz.fnusa.1_1.svc"
+
+# Prepare the handwriting variables
+variables = ["y", "x", "time", "pen_status", "azimuth", "tilt", "pressure"]
+
+
 if __name__ == "__main__":
 
     # Instantiate the handwriting features object from an example signal
-    feature_sample = HandwritingFeatures.from_json(path=os.path.join(data_path, "signal.json"))
+    feature_sample = HandwritingFeatures.from_svc(os.path.join(data_path, subject_group, signal_name), variables)
 
     # Compute the handwriting features
     #
     # 1. Kinematic features
+    #    a) velocity
+    #    b) acceleration
+    #    c) jerk
     # 2. Dynamic features
+    #    a) azimuth
+    #    b) tilt
+    #    c) pressure
     # 3. Spatial features
+    #    a) stroke length
+    #    b) stroke height
+    #    c) stroke width
     # 4. Temporal features
+    #    a) stroke duration
+    #    b) ratio of stroke durations (on-surface / in-air strokes)
+    #    c) writing duration
+    #    d) ratio of writing durations (on-surface / in-air writing)
 
     # 1. Kinematic features
     feature_sample.velocity(axis="x", in_air=False, statistics=["mean", "std"])

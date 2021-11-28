@@ -93,39 +93,184 @@ Besides the convenient use of the `HandwritingFeatures` interface class, the lib
 
 ## Examples
 
+For more information about the example data, see the info file at `examples/data/info.json`.
+
+### 1. compute handwriting features
+
 ```python
+import os
 from handwriting_features.features import HandwritingFeatures
 
-# Instantiate the handwriting features object
-feature_sample = HandwritingFeatures.from_svc(path="path_to_file")
 
-# Compute the handwriting features
-# 
+# Prepare the path to example data
+data_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "data")
+
+
+# Prepare the subject group
+subject_group = "HC-female"
+# subject_group = "HC-male"
+# subject_group = "PD-female"
+# subject_group = "PD-male"
+
+# Prepare the filename of the signal to be used
+signal_name = "00026_w.cz.fnusa.1_1.svc"
+
+# Prepare the handwriting variables
+variables = ["y", "x", "time", "pen_status", "azimuth", "tilt", "pressure"]
+
+
+# Instantiate the handwriting features object from an example signal
+feature_path = str(os.path.join(data_path, subject_group, signal_name))
+feature_data = HandwritingFeatures.from_svc(feature_path, variables)
+
+# Handwriting features:
+#
 # 1. Kinematic features
+#    a) velocity
+#    b) acceleration
+#    c) jerk
 # 2. Dynamic features
+#    a) azimuth
+#    b) tilt
+#    c) pressure
 # 3. Spatial features
+#    a) stroke length
+#    b) stroke height
+#    c) stroke width
 # 4. Temporal features
+#    a) stroke duration
+#    b) ratio of stroke durations (on-surface / in-air strokes)
+#    c) writing duration
+#    d) ratio of writing durations (on-surface / in-air writing)
 
 # 1. Kinematic features
-feature_sample.velocity(axis="x", in_air=False, statistics=["mean", "std"])
-feature_sample.acceleration(axis="y", in_air=True, statistics=["median", "iqr"])
-feature_sample.jerk(axis="xy", in_air=False)
+feature_data.velocity(axis="x", in_air=False, statistics=["mean", "std"])
+feature_data.acceleration(axis="y", in_air=True, statistics=["median", "iqr"])
+feature_data.jerk(axis="xy", in_air=False)
 
 # 2. Dynamic features
-feature_sample.azimuth(in_air=False, statistics=["cv_parametric"])
-feature_sample.tilt(in_air=True, statistics=["cv_nonparametric"])
-feature_sample.pressure(statistics=())
+feature_data.azimuth(in_air=False, statistics=["cv_parametric"])
+feature_data.tilt(in_air=True, statistics=["cv_nonparametric"])
+feature_data.pressure(statistics=())
 
 # 3. Spatial features
-feature_sample.stroke_length(in_air=False, statistics=["quartile_1", "quartile_3"])
-feature_sample.stroke_height(in_air=True, statistics=["slope_of_linear_regression"])
-feature_sample.stroke_width(in_air=False, statistics=())
+feature_data.stroke_length(in_air=False, statistics=["quartile_1", "quartile_3"])
+feature_data.stroke_height(in_air=True, statistics=["slope_of_linear_regression"])
+feature_data.stroke_width(in_air=False, statistics=())
 
 # 4. Temporal features
-feature_sample.stroke_duration(in_air=False, statistics=["percentile_5", "percentile_95"])
-feature_sample.ratio_of_stroke_durations(statistics=())
-feature_sample.writing_duration(in_air=True)
-feature_sample.ratio_of_writing_durations()
+feature_data.stroke_duration(in_air=False, statistics=["percentile_5", "percentile_95"])
+feature_data.ratio_of_stroke_durations(statistics=())
+feature_data.writing_duration(in_air=True)
+feature_data.ratio_of_writing_durations()
+```
+
+### 2. plot handwriting features
+
+```python
+import os
+import matplotlib.pyplot as plt
+from pprint import pprint
+from handwriting_features.features import HandwritingFeatures
+
+
+# Prepare the path to example data
+data_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "data")
+
+
+# Prepare the subject group
+subject_group = "HC-female"
+# subject_group = "HC-male"
+# subject_group = "PD-female"
+# subject_group = "PD-male"
+
+# Prepare the filename of the signal to be used
+signal_name = "00026_w.cz.fnusa.1_1.svc"
+
+# Prepare the handwriting variables
+variables = ["y", "x", "time", "pen_status", "azimuth", "tilt", "pressure"]
+
+# Instantiate the handwriting features object from an example signal
+feature_path = str(os.path.join(data_path, subject_group, signal_name))
+feature_data = HandwritingFeatures.from_svc(feature_path, variables)
+
+# Extract the loaded data
+loaded_data = feature_data.sample
+
+# Handwriting features:
+#
+# 1. Kinematic features
+#    a) velocity
+#    b) acceleration
+#    c) jerk
+# 2. Dynamic features
+#    a) azimuth
+#    b) tilt
+#    c) pressure
+# 3. Spatial features
+#    a) stroke length
+#    b) stroke height
+#    c) stroke width
+# 4. Temporal features
+#    a) stroke duration
+#    b) ratio of stroke durations (on-surface / in-air strokes)
+#    c) writing duration
+#    d) ratio of writing durations (on-surface / in-air writing)
+
+# Prepare the features computation
+axis = "x"
+in_air = False
+statistics = ()
+
+# 1. Compute the kinematic features
+feature = feature_data.velocity(axis=axis, in_air=in_air, statistics=statistics)
+# feature = feature_data.acceleration(axis=axis, in_air=in_air, statistics=statistics)
+# feature = feature_data.jerk(axis=axis, in_air=in_air, statistics=statistics)
+
+# 2. Compute the dynamic features
+# feature = feature_data.azimuth(in_air=in_air, statistics=statistics)
+# feature = feature_data.tilt(in_air=in_air, statistics=statistics)
+# feature = feature_data.pressure(statistics=statistics)
+
+# 3. Compute the spatial features
+# feature = feature_data.stroke_length(in_air=in_air, statistics=statistics)
+# feature = feature_data.stroke_height(in_air=in_air, statistics=statistics)
+# feature = feature_data.stroke_width(in_air=in_air, statistics=statistics)
+
+# 4. Compute the temporal features
+# feature = feature_data.stroke_duration(in_air=in_air, statistics=statistics)
+# feature = feature_data.ratio_of_stroke_durations(statistics=statistics)
+# feature = feature_data.writing_duration(in_air=in_air)
+# feature = feature_data.ratio_of_writing_durations()
+
+pprint(feature)
+
+# Plot the original data and the computed feature
+if not statistics:
+
+    fig = plt.figure(figsize=(16, 10))
+
+    # Plot the original data
+    ax = fig.add_subplot(1, 2, 1)
+    ax.plot(loaded_data.sample_x, loaded_data.sample_y, "-", color="blue", linewidth=2, alpha=0.7)
+    ax.yaxis.grid(True)
+    ax.xaxis.grid(True)
+
+    # Plot the original data
+    ax = fig.add_subplot(1, 2, 2)
+    ax.plot(feature, "-", color="red", linewidth=2, alpha=0.7)
+    ax.yaxis.grid(True)
+    ax.xaxis.grid(True)
+
+    # Adjust the figure
+    fig.tight_layout()
+
+    # Store the graphs
+    # plt.savefig(f"{signal_name}.pdf", bbox_inches="tight")
+
+    # Show the graphs
+    plt.get_current_fig_manager().window.state("zoomed")
+    plt.show()
 ```
 
 ## License
