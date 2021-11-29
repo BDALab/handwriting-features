@@ -93,7 +93,9 @@ Besides the convenient use of the `HandwritingFeatures` interface class, the lib
 
 ## Examples
 
-For more information about the example data, see the info file at `examples/data/info.json`.
+The package comes with examples showing how to compute/plot the handwriting features. For this purpose, it also provides example data from a subset of 4 writers coming from the Parkinson's Disease Handwriting Database (PaHaW): 2 healthy controls (HC; 1 male, 1 female) and 2 patients with Parkinson's disease (PD; 1 male, 1 female).
+
+For more information about the example data, see the info file at `examples/data/info.json` or visit the official website of [Brain Diseases Analysis Laboratory](http://bdalab.utko.feec.vutbr.cz/).
 
 ### 1. compute handwriting features
 
