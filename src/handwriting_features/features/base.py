@@ -19,6 +19,19 @@ class HandwritingFeaturesBase(object):
     # ------------------------------- #
 
     @classmethod
+    def from_sample(cls, sample, **config):
+        """
+        Initializes HandwritingFeatures object from a sample.
+        :param sample: handwriting sample object
+        :type sample: HandwritingSample
+        :param config: common configuration
+        :type config: **kwargs
+        :return: HandwritingFeatures object
+        :rtype: HandwritingFeatures
+        """
+        return cls(HandwritingSampleWrapper(sample), **config)
+
+    @classmethod
     def from_list(cls, values, labels=None, **config):
         """
         Initializes HandwritingFeatures object from a list.
