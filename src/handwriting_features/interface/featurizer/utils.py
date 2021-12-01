@@ -1,5 +1,5 @@
 import numpy
-from itertools import chain
+from itertools import chain, product
 from handwriting_features.features.configuration.settings import HandwritingFeaturesSettings
 
 
@@ -179,3 +179,51 @@ class MultiSubjectFeatureUtils(object):
 
         # Return the finalized feature labels
         return labels
+
+
+class FeaturesPipelineUtils(object):
+    """Class implementing features pipeline utils"""
+
+    # Arguments to be prepared
+    arguments_to_prepare = ["axis", "in_air"]
+
+    @classmethod
+    def prepare_features_pipeline(cls, pipeline):
+        """
+        Prepares the features pipeline.
+
+        :param pipeline: pipeline of the features to be extracted
+        :type pipeline: list
+        :return: prepared pipeline
+        :rtype: list
+        """
+
+        # Prepare an empty updated features pipeline
+        prepared = []
+
+        # Prepare the features pipeline
+        for feature in pipeline:
+            name, args = feature.get("name"), feature.get("args", {})
+
+            # Clean the arguments
+            args = {key: val for key, val in args.items() if val}
+
+            # Separate the arguments not/to be prepared
+            unchanged_args = {key: val for key, val in args.items() if key not in cls.arguments_to_prepare}
+            processed_args = [
+                (key, val if isinstance(val, list) else [val])
+                for key, val in args.items() if key in cls.arguments_to_prepare
+            ]
+
+            # Process the arguments
+            processed_args = list(product(*[[(key, v) for v in val] for key, val in processed_args]))
+
+            # Add the feature to the features pipeline
+            for changed_args in processed_args:
+                prepared.append({
+                    "name": name,
+                    "args": {**unchanged_args, **dict(changed_args)}
+                })
+
+        # Return the prepared features pipeline
+        return prepared

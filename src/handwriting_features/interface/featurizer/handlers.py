@@ -2,7 +2,11 @@ import numpy
 from handwriting_features.features import HandwritingFeatures
 from handwriting_features.features.configuration.mapping import HandwritingFeaturesMapping
 from handwriting_features.features.validation import HandwritingFeaturesValidation
-from handwriting_features.interface.featurizer.utils import SingleSubjectFeatureUtils, MultiSubjectFeatureUtils
+from handwriting_features.interface.featurizer.utils import (
+    SingleSubjectFeatureUtils,
+    MultiSubjectFeatureUtils,
+    FeaturesPipelineUtils
+)
 
 
 class SingleSubjectFeatureExtractorHandler(object):
@@ -19,6 +23,9 @@ class SingleSubjectFeatureExtractorHandler(object):
 
     # Feature utils
     utils = SingleSubjectFeatureUtils
+
+    # Features pipeline utils
+    pipeline_utils = FeaturesPipelineUtils
 
     @classmethod
     def extract(cls, data_values, data_labels=None, pipeline=None, **configuration):
@@ -46,6 +53,9 @@ class SingleSubjectFeatureExtractorHandler(object):
         # Prepare the buffers for extracted feature values/labels
         feature_values = []
         feature_labels = []
+
+        # Prepare the features pipeline
+        pipeline = cls.pipeline_utils.prepare_features_pipeline(pipeline)
 
         # Extract the features specified in the features pipeline
         for feature in pipeline:
