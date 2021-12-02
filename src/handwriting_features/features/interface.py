@@ -25,7 +25,7 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :return: velocity
         :rtype: numpy.ndarray or numpy.NaN
         """
-        return self.compute(self.sample, velocity, statistics=statistics, axis=axis, in_air=in_air)
+        return self.compute(self.wrapper, velocity, statistics=statistics, axis=axis, in_air=in_air)
 
     def acceleration(self, axis="xy", in_air=False, statistics=()):
         """
@@ -40,7 +40,7 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :return: acceleration
         :rtype: numpy.ndarray or numpy.NaN
         """
-        return self.compute(self.sample, acceleration, statistics=statistics, axis=axis, in_air=in_air)
+        return self.compute(self.wrapper, acceleration, statistics=statistics, axis=axis, in_air=in_air)
 
     def jerk(self, axis="xy", in_air=False, statistics=()):
         """
@@ -55,7 +55,7 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :return: jerk
         :rtype: numpy.ndarray or numpy.NaN
         """
-        return self.compute(self.sample, jerk, statistics=statistics, axis=axis, in_air=in_air)
+        return self.compute(self.wrapper, jerk, statistics=statistics, axis=axis, in_air=in_air)
 
     # -------------------
     # 2. Dynamic features
@@ -71,7 +71,7 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :return: azimuth
         :rtype: numpy.ndarray or numpy.NaN
         """
-        return self.compute(self.sample, azimuth, statistics=statistics, in_air=in_air)
+        return self.compute(self.wrapper, azimuth, statistics=statistics, in_air=in_air)
 
     def tilt(self, in_air=False, statistics=()):
         """
@@ -84,7 +84,7 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :return: tilt
         :rtype: numpy.ndarray or numpy.NaN
         """
-        return self.compute(self.sample, tilt, statistics=statistics, in_air=in_air)
+        return self.compute(self.wrapper, tilt, statistics=statistics, in_air=in_air)
 
     def pressure(self, statistics=()):
         """
@@ -95,7 +95,7 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :return: pressure
         :rtype: numpy.ndarray or numpy.NaN
         """
-        return self.compute(self.sample, pressure, statistics=statistics)
+        return self.compute(self.wrapper, pressure, statistics=statistics)
 
     # -------------------
     # 3. Spatial features
@@ -111,7 +111,7 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :return: stroke length
         :rtype: numpy.ndarray or numpy.NaN
         """
-        return self.compute(self.sample, stroke_length, statistics=statistics, in_air=in_air)
+        return self.compute(self.wrapper, stroke_length, statistics=statistics, in_air=in_air)
 
     def stroke_height(self, in_air=False, statistics=()):
         """
@@ -124,7 +124,7 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :return: stroke height
         :rtype: numpy.ndarray or numpy.NaN
         """
-        return self.compute(self.sample, stroke_height, statistics=statistics, in_air=in_air)
+        return self.compute(self.wrapper, stroke_height, statistics=statistics, in_air=in_air)
 
     def stroke_width(self, in_air=False, statistics=()):
         """
@@ -137,7 +137,7 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :return: stroke width
         :rtype: numpy.ndarray or numpy.NaN
         """
-        return self.compute(self.sample, stroke_width, statistics=statistics, in_air=in_air)
+        return self.compute(self.wrapper, stroke_width, statistics=statistics, in_air=in_air)
 
     # --------------------
     # 4. Temporal features
@@ -153,7 +153,7 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :return: stroke duration
         :rtype: numpy.ndarray or numpy.NaN
         """
-        return self.compute(self.sample, stroke_duration, statistics=statistics, in_air=in_air)
+        return self.compute(self.wrapper, stroke_duration, statistics=statistics, in_air=in_air)
 
     def ratio_of_stroke_durations(self, statistics=()):
         """
@@ -164,7 +164,7 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :return: ratio of stroke durations
         :rtype: numpy.ndarray or numpy.NaN
         """
-        return self.compute(self.sample, ratio_of_stroke_durations, statistics=statistics)
+        return self.compute(self.wrapper, ratio_of_stroke_durations, statistics=statistics)
 
     def writing_duration(self, in_air=False):
         """
@@ -175,7 +175,7 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :return: writing duration
         :rtype: float
         """
-        return self.compute(self.sample, writing_duration, in_air=in_air)
+        return self.compute(self.wrapper, writing_duration, in_air=in_air)
 
     def ratio_of_writing_durations(self):
         """
@@ -184,16 +184,4 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :return: ratio of writing durations
         :rtype: float
         """
-        return self.compute(self.sample, ratio_of_writing_durations)
-
-    # ---------- #
-    # Properties #
-    # ---------- #
-
-    @property
-    def sample(self):
-        return self._sample
-
-    @property
-    def config(self):
-        return self._config
+        return self.compute(self.wrapper, ratio_of_writing_durations)

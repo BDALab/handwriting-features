@@ -7,12 +7,12 @@ from handwriting_features.features.validation import HandwritingFeaturesValidati
 class HandwritingFeaturesBase(object):
     """Base class for handwriting features"""
 
-    def __init__(self, sample, **config):
+    def __init__(self, sample_wrapper, **config):
         """Constructor method"""
 
         # Set the sample and the extractor configuration
-        self._sample = sample
-        self._config = config if config else {}
+        self.wrapper = sample_wrapper
+        self.config = config if config else {}
 
     # ------------------------------- #
     # Alternative constructor methods #

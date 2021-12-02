@@ -196,8 +196,8 @@ variables = ["y", "x", "time", "pen_status", "azimuth", "tilt", "pressure"]
 feature_path = str(os.path.join(data_path, subject_group, signal_name))
 feature_data = HandwritingFeatures.from_svc(feature_path, variables)
 
-# Extract the loaded data
-loaded_data = feature_data.sample
+# Extract the loaded data (wrapped handwriting sample)
+loaded_data = feature_data.wrapper
 
 # Handwriting features:
 #

@@ -32,8 +32,8 @@ if __name__ == "__main__":
     # Instantiate the handwriting features object from an example signal
     feature_sample = HandwritingFeatures.from_svc(os.path.join(data_path, subject_group, signal_name), variables)
 
-    # Extract the loaded data
-    loaded_data = feature_sample.sample
+    # Extract the loaded data (wrapped handwriting sample)
+    loaded_data = feature_sample.wrapper
 
     # Prepare the features computation
     in_air = False
