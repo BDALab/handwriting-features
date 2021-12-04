@@ -7,13 +7,13 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/BDALab/handwriting-features)
 ![PyPI - License](https://img.shields.io/pypi/l/handwriting-features)
 
-This package provides an easy-to-use modern library for the extraction of a variety of common handwriting features focused on the domain of kinematic, dynamic, spatial, and temporal analysis of online handwriting/drawing. It is built on top of the [Handwriting sample](https://github.com/BDALab/handwriting-sample/) package for easy class-based manipulation with online handwriting data.
+This package provides a [PyPi-installable](https://pypi.org/project/handwriting-features/) easy-to-use modern library for the extraction of a variety of common handwriting features focused on the domain of kinematic, dynamic, spatial, and temporal analysis of online handwriting/drawing. It is built on top of the [Handwriting sample](https://github.com/BDALab/handwriting-sample/) package for easy class-based manipulation with online handwriting data.
 
 It also provides an interface for the Featurizer API: 
 1. [Server side](https://github.com/BDALab/featurizer-api/) (RESTful API for feature extraction via injected features extraction library)
 2. [Client side](https://github.com/BDALab/featurizer-api-client/) (lightweight client application)
 
-_The full programming sphinx-generated docs can be seen in `docs/`_.
+_The full programming sphinx-generated docs can be seen in the [official documentation](https://featurizer-api-client.readthedocs.io/en/latest/)_.
 
 **Contents**:
 1. [Installation](#Installation)
