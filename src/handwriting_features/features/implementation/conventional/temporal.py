@@ -14,16 +14,16 @@ def stroke_duration(sample_wrapper, in_air):
     """
 
     # Get the strokes
-    strokes = sample_wrapper.sample.get_on_surface_strokes() \
+    strokes = sample_wrapper.on_surface_strokes \
         if not in_air \
-        else sample_wrapper.sample.get_in_air_strokes()
+        else sample_wrapper.in_air_strokes
 
     # Check the presence of strokes
     if not strokes:
         return numpy.nan
 
     # Return the stokes duration
-    return numpy.array([max(stroke.time) - min(stroke.time) for _, stroke in strokes])
+    return numpy.array([max(stroke.time) - min(stroke.time) for stroke in strokes])
 
 
 def ratio_of_stroke_durations(sample_wrapper):
