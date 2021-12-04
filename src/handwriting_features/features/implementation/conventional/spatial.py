@@ -15,16 +15,16 @@ def stroke_length(sample_wrapper, in_air):
     """
 
     # Get the strokes
-    strokes = sample_wrapper.sample.get_on_surface_strokes() \
+    strokes = sample_wrapper.on_surface_strokes \
         if not in_air \
-        else sample_wrapper.sample.get_in_air_strokes()
+        else sample_wrapper.in_air_strokes
 
     # Check the presence of strokes
     if not strokes:
         return numpy.nan
 
     # Get the strokes length
-    length = [sum(numpy.sqrt(derivation(stroke.x) ** 2 + derivation(stroke.y) ** 2)) for _, stroke in strokes]
+    length = [sum(numpy.sqrt(derivation(stroke.x) ** 2 + derivation(stroke.y) ** 2)) for stroke in strokes]
     length = numpy.array(length)
 
     # Return the length
@@ -44,16 +44,16 @@ def stroke_height(sample_wrapper, in_air):
     """
 
     # Get the strokes
-    strokes = sample_wrapper.sample.get_on_surface_strokes() \
+    strokes = sample_wrapper.on_surface_strokes \
         if not in_air \
-        else sample_wrapper.sample.get_in_air_strokes()
+        else sample_wrapper.in_air_strokes
 
     # Check the presence of strokes
     if not strokes:
         return numpy.nan
 
     # Return the stokes height
-    return numpy.array([max(stroke.y) - min(stroke.y) for _, stroke in strokes])
+    return numpy.array([max(stroke.y) - min(stroke.y) for stroke in strokes])
 
 
 def stroke_width(sample_wrapper, in_air):
@@ -69,13 +69,13 @@ def stroke_width(sample_wrapper, in_air):
     """
 
     # Get the strokes
-    strokes = sample_wrapper.sample.get_on_surface_strokes() \
+    strokes = sample_wrapper.on_surface_strokes \
         if not in_air \
-        else sample_wrapper.sample.get_in_air_strokes()
+        else sample_wrapper.in_air_strokes
 
     # Check the presence of strokes
     if not strokes:
         return numpy.nan
 
     # Return the stokes width
-    return numpy.array([max(stroke.x) - min(stroke.x) for _, stroke in strokes])
+    return numpy.array([max(stroke.x) - min(stroke.x) for stroke in strokes])
