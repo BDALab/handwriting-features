@@ -35,4 +35,4 @@ def pressure(sample_wrapper):
     :return: pressure
     :rtype: numpy.ndarray or np.NaN
     """
-    return sample_wrapper.sample_pressure
+    return sample_wrapper.compute_pressure()

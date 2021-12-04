@@ -185,7 +185,7 @@ class HandwritingSampleWrapper(object):
         self.validate_surface_movement(in_air)
 
         # Get the data to be used for the feature computation
-        data = self.sample.get_on_surface_data() if not in_air else self.sample.get_in_air_data()
+        data = self.on_surface_data if not in_air else self.in_air_data
 
         # Return the azimuth
         return data.azimuth
@@ -205,10 +205,20 @@ class HandwritingSampleWrapper(object):
         self.validate_surface_movement(in_air)
 
         # Get the data to be used for the feature computation
-        data = self.sample.get_on_surface_data() if not in_air else self.sample.get_in_air_data()
+        data = self.on_surface_data if not in_air else self.in_air_data
 
         # Return the tilt
         return data.tilt
+
+    @functools.lru_cache(maxsize=1)
+    def compute_pressure(self):
+        """
+        Computes the pressure.
+
+        :return: tilt
+        :rtype: numpy.ndarray or numpy.NaN
+        """
+        return self.on_surface_data.pressure
 
     # ---------------------------- #
     # Sample handwriting variables #
@@ -241,6 +251,14 @@ class HandwritingSampleWrapper(object):
     @property
     def sample_pressure(self):
         return self.sample.pressure
+
+    @functools.cached_property
+    def in_air_data(self):
+        return self.sample.get_in_air_data()
+
+    @functools.cached_property
+    def on_surface_data(self):
+        return self.sample.get_on_surface_data()
 
     @functools.cached_property
     def in_air_strokes(self):
