@@ -16,7 +16,12 @@ class HandwritingSampleWrapper(object):
 
     def __init__(self, sample):
         """Constructor method"""
+
+        # Set the sample
         self.sample = sample
+
+        # Set the strokes
+        self.strokes = self.sample.get_strokes()
 
     # ------------------------------- #
     # Alternative constructor methods #
@@ -113,20 +118,11 @@ class HandwritingSampleWrapper(object):
         self.validate_axis(axis)
         self.validate_surface_movement(in_air)
 
-        # Get the data to be used for the feature computation
-        data = self.sample.get_on_surface_strokes() if not in_air else self.sample.get_in_air_strokes()
-
-        # Compute velocity for each stroke separately
-        velocity = [
-            derivation(stroke.xy if axis == "xy" else (stroke.x if axis == "x" else stroke.y))
-            for _, stroke in data
-        ]
-
-        # Assemble the velocity from the strokes
-        velocity = numpy.concatenate(velocity) if velocity else numpy.nan
+        # Compute the velocity
+        velocity = numpy.concatenate(self._compute_strokes_velocities(axis, in_air))
 
         # Return the velocity
-        return velocity
+        return velocity if velocity is not None and velocity.size > 0 else numpy.nan
 
     @functools.lru_cache(maxsize=len(axes) * len(surfaces))
     def compute_acceleration(self, axis="xy", in_air=False):
@@ -145,8 +141,11 @@ class HandwritingSampleWrapper(object):
         self.validate_axis(axis)
         self.validate_surface_movement(in_air)
 
+        # Compute the acceleration
+        acceleration = numpy.concatenate(self._compute_strokes_accelerations(axis, in_air))
+
         # Return the acceleration
-        return derivation(self.compute_velocity(axis, in_air))
+        return acceleration if acceleration is not None and acceleration.size > 0 else numpy.nan
 
     @functools.lru_cache(maxsize=len(axes) * len(surfaces))
     def compute_jerk(self, axis="xy", in_air=False):
@@ -165,8 +164,11 @@ class HandwritingSampleWrapper(object):
         self.validate_axis(axis)
         self.validate_surface_movement(in_air)
 
+        # Compute the jerk
+        jerk = numpy.concatenate(self._compute_strokes_jerks(axis, in_air))
+
         # Return the jerk
-        return derivation(self.compute_acceleration(axis, in_air))
+        return jerk if jerk is not None and jerk.size > 0 else numpy.nan
 
     @functools.lru_cache(maxsize=len(surfaces))
     def compute_azimuth(self, in_air=False):
@@ -184,10 +186,9 @@ class HandwritingSampleWrapper(object):
 
         # Get the data to be used for the feature computation
         data = self.sample.get_on_surface_data() if not in_air else self.sample.get_in_air_data()
-        data = data.azimuth
 
         # Return the azimuth
-        return data
+        return data.azimuth
 
     @functools.lru_cache(maxsize=len(surfaces))
     def compute_tilt(self, in_air=False):
@@ -205,10 +206,9 @@ class HandwritingSampleWrapper(object):
 
         # Get the data to be used for the feature computation
         data = self.sample.get_on_surface_data() if not in_air else self.sample.get_in_air_data()
-        data = data.tilt
 
         # Return the tilt
-        return data
+        return data.tilt
 
     # ---------------------------- #
     # Sample handwriting variables #
@@ -242,6 +242,14 @@ class HandwritingSampleWrapper(object):
     def sample_pressure(self):
         return self.sample.pressure
 
+    @functools.cached_property
+    def in_air_strokes(self):
+        return [stroke for status, stroke in self.strokes if status == "in_air"]
+
+    @functools.cached_property
+    def on_surface_strokes(self):
+        return [stroke for status, stroke in self.strokes if status == "on_surface"]
+
     # ------------------- #
     # Validation routines #
     # ------------------- #
@@ -257,3 +265,115 @@ class HandwritingSampleWrapper(object):
         """Validates the surface movement"""
         if not isinstance(in_air, bool):
             raise UnsupportedSurfaceMovementError(f"Unsupported <in_air> argument {in_air}; must be bool")
+
+    # ---------------------- #
+    # Computational routines #
+    # ---------------------- #
+
+    @functools.lru_cache(maxsize=len(axes) * len(surfaces))
+    def _compute_strokes_trajectories(self, axis="xy", in_air=False):
+        """
+        Computes the strokes trajectories.
+
+        :param axis: axis to compute the trajectories from, defaults to "xy"
+        :type axis: str, optional
+        :param in_air: in-air flag, defaults to False
+        :type in_air: bool, optional
+        :return: strokes trajectories
+        :rtype: list
+        """
+
+        # Get the strokes
+        strokes = self.on_surface_strokes if not in_air else self.in_air_strokes
+
+        # Return the strokes trajectories
+        if axis == "x":
+            return [numpy.abs(derivation(stroke.x)) for stroke in strokes]
+        if axis == "y":
+            return [numpy.abs(derivation(stroke.y)) for stroke in strokes]
+        if axis == "xy":
+            return [
+                numpy.sqrt(numpy.power(derivation(stroke.x), 2) + numpy.power(derivation(stroke.y), 2))
+                for stroke in strokes
+            ]
+
+    @functools.lru_cache(maxsize=len(surfaces))
+    def _compute_strokes_time_differences(self, in_air=False):
+        """
+        Computes the strokes time differences.
+
+        :param in_air: in-air flag, defaults to False
+        :type in_air: bool, optional
+        :return: strokes time differences
+        :rtype: list
+        """
+        return [
+            derivation(stroke.time)
+            for stroke in (self.on_surface_strokes if not in_air else self.in_air_strokes)
+        ]
+
+    @functools.lru_cache(maxsize=len(axes) * len(surfaces))
+    def _compute_strokes_velocities(self, axis="xy", in_air=False):
+        """
+        Computes the strokes velocities.
+
+        :param axis: axis to compute the velocities from, defaults to "xy"
+        :type axis: str, optional
+        :param in_air: in-air flag, defaults to False
+        :type in_air: bool, optional
+        :return: strokes velocities
+        :rtype: list
+        """
+
+        # Get the variable to differentiate over (strokes trajectories)
+        ds = self._compute_strokes_trajectories(axis, in_air)
+
+        # Get the stroke time differences
+        dt = self._compute_strokes_time_differences(in_air)
+
+        # Return the stokes velocities
+        return [d / t for (d, t) in zip(ds, dt)]
+
+    @functools.lru_cache(maxsize=len(axes) * len(surfaces))
+    def _compute_strokes_accelerations(self, axis="xy", in_air=False):
+        """
+        Computes the strokes accelerations.
+
+        :param axis: axis to compute the accelerations from, defaults to "xy"
+        :type axis: str, optional
+        :param in_air: in-air flag, defaults to False
+        :type in_air: bool, optional
+        :return: strokes accelerations
+        :rtype: list
+        """
+
+        # Get the variable to differentiate over (strokes velocities)
+        dv = self._compute_strokes_velocities(axis, in_air)
+
+        # Get the stroke time differences
+        dt = self._compute_strokes_time_differences(in_air)
+
+        # Return the stokes accelerations
+        return [derivation(d) / t[1:] for (d, t) in zip(dv, dt)]
+
+    @functools.lru_cache(maxsize=len(axes) * len(surfaces))
+    def _compute_strokes_jerks(self, axis="xy", in_air=False):
+        """
+        Computes the strokes jerks.
+
+        :param axis: axis to compute the jerks from, defaults to "xy"
+        :type axis: str, optional
+        :param in_air: in-air flag, defaults to False
+        :type in_air: bool, optional
+        :return: strokes jerks
+        :rtype: list
+        """
+
+        # Get the variable to differentiate over (strokes accelerations)
+        da = self._compute_strokes_accelerations(axis, in_air)
+
+        # Get the stroke time differences
+        dt = self._compute_strokes_time_differences(in_air)
+
+        # Return the stokes jerks
+        return [derivation(d) / t[2:] for (d, t) in zip(da, dt)]
