@@ -13,7 +13,7 @@ It also provides an interface for the Featurizer API:
 1. [Server side](https://github.com/BDALab/featurizer-api/) (RESTful API for feature extraction via injected features extraction library)
 2. [Client side](https://github.com/BDALab/featurizer-api-client/) (lightweight client application)
 
-_The full programming sphinx-generated docs can be seen in the [official documentation](https://featurizer-api-client.readthedocs.io/en/latest/)_.
+_The full programming sphinx-generated docs can be seen in the [official documentation](https://handwriting-features.readthedocs.io/en/latest/)_.
 
 **Contents**:
 1. [Installation](#Installation)
