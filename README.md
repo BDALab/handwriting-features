@@ -5,7 +5,7 @@
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/BDALab/handwriting-features)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/handwriting-features)
 ![GitHub top language](https://img.shields.io/github/languages/top/BDALab/handwriting-features)
-![PyPI - License](https://img.shields.io/pypi/l/handwriting-features)
+![GitHub](https://img.shields.io/github/license/BDALab/handwriting-features)
 
 This package provides a [PyPi-installable](https://pypi.org/project/handwriting-features/) easy-to-use modern library for the extraction of a variety of common handwriting features focused on the domain of kinematic, dynamic, spatial, and temporal analysis of online handwriting/drawing. It is built on top of the [Handwriting sample](https://github.com/BDALab/handwriting-sample/) package for easy class-based manipulation with online handwriting data.
 
