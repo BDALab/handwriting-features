@@ -9,8 +9,11 @@ from handwriting_features.interface.featurizer.utils import (
 )
 
 
-class SingleSubjectFeatureExtractorHandler(object):
-    """Class implementing the single-subject features extractor handler"""
+class BaseFeatureExtractorHandler(object):
+    """Base class for the feature extractor handlers"""
+
+    # Features pipeline utils
+    pipeline_utils = FeaturesPipelineUtils
 
     # Features
     features = HandwritingFeatures
@@ -21,14 +24,15 @@ class SingleSubjectFeatureExtractorHandler(object):
     # Feature validator
     validation = HandwritingFeaturesValidation
 
+
+class SingleSubjectFeatureExtractorHandler(BaseFeatureExtractorHandler):
+    """Class implementing the single-subject features extractor handler"""
+
     # Feature utils
     utils = SingleSubjectFeatureUtils
 
-    # Features pipeline utils
-    pipeline_utils = FeaturesPipelineUtils
-
     @classmethod
-    def extract(cls, data_values, data_labels=None, pipeline=None, **configuration):
+    def extract(cls, data_values, data_labels=None, pipeline=None, preparation=True, **configuration):
         """
         Extracts the features specified in the pipeline for a single subject.
 
@@ -38,6 +42,8 @@ class SingleSubjectFeatureExtractorHandler(object):
         :type data_labels: list, optional
         :param pipeline: pipeline of the features, defaults to None
         :type pipeline: list, optional
+        :param preparation: prepare the pipeline of features, defaults to True
+        :type preparation: bool, optional
         :param configuration: common extractor configuration
         :type configuration: **kwargs
         :return: extracted features and labels
@@ -55,7 +61,8 @@ class SingleSubjectFeatureExtractorHandler(object):
         feature_labels = []
 
         # Prepare the features pipeline
-        pipeline = cls.pipeline_utils.prepare_features_pipeline(pipeline)
+        if preparation:
+            pipeline = cls.pipeline_utils.prepare_features_pipeline(pipeline)
 
         # Extract the features specified in the features pipeline
         for feature in pipeline:
@@ -80,7 +87,7 @@ class SingleSubjectFeatureExtractorHandler(object):
         }
 
 
-class MultiSubjectFeatureExtractorHandler(object):
+class MultiSubjectFeatureExtractorHandler(BaseFeatureExtractorHandler):
     """Class implementing the multi-subject features extractor handler"""
 
     # Feature extractor
@@ -106,9 +113,17 @@ class MultiSubjectFeatureExtractorHandler(object):
         :rtype: dict {"features": ..., "labels": ...}
         """
 
+        # Prepare the features pipeline
+        pipeline = cls.pipeline_utils.prepare_features_pipeline(pipeline)
+
         # Extract the features specified in the features pipeline for each subject
         extracted = [
-            cls.extractor.extract(data_values[sample, ...], data_labels, pipeline, **configuration)
+            cls.extractor.extract(
+                data_values=data_values[sample, ...],
+                data_labels=data_labels,
+                pipeline=pipeline,
+                preparation=False,
+                **configuration)
             for sample in range(data_values.shape[0])
         ]
 
