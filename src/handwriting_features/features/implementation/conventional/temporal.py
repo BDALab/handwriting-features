@@ -1,10 +1,5 @@
 import numpy
-from handwriting_features.data.utils.math import derivation
-from handwriting_features.features.implementation.conventional.utils import (
-    get_stroke_indexes,
-    get_borders,
-    fuze_pauses
-)
+from handwriting_features.features.implementation.conventional.utils.temporal import WritingStopsUtils
 
 
 def stroke_duration(sample_wrapper, in_air):
@@ -173,54 +168,4 @@ def writing_stops(sample_wrapper):
     :return: writing stops
     :rtype: numpy.ndarray or np.NaN
     """
-
-    # Get the strokes and their starting indices
-    strokes = sample_wrapper.strokes
-    indices = get_stroke_indexes([stroke for _, stroke in strokes])
-
-    # Prepare the stops
-    time = numpy.nan
-    stops_borders_left = []
-    stops_borders_right = []
-
-    # Extract the stops
-    for (pen_status, stroke), index in zip(strokes, indices):
-        if pen_status == "in_air":
-            continue
-
-        # Compute the vector of length, time
-        length = numpy.sqrt(numpy.power(derivation(stroke.x), 2) + numpy.power(derivation(stroke.y), 2))
-        time = derivation(stroke.time)
-
-        # Compute the vector of velocity (value <= 1 mm/s is set to 0)
-        velocity = (d / t for (d, t) in zip(length, time))
-        velocity = numpy.array([0 if v <= 1 else v for v in velocity])
-
-        # Get the number of samples equaling to 15 ms
-        num_samples = numpy.ceil(0.015 / numpy.mean(time))
-
-        # Identify the stops
-        border_left, border_right = get_borders(velocity)
-
-        # Take only pauses lasting at least 15 ms
-        pause_indices = numpy.where((border_right - border_left) > num_samples)[0]
-        border_left = border_left[pause_indices].astype(numpy.float)
-        border_right = border_right[pause_indices].astype(numpy.float)
-
-        # Fuze the pauses
-        border_left, border_right = fuze_pauses(border_left, border_right, num_samples)
-
-        # Add the starting index of the stroke
-        border_left += index
-        border_right += index - 1
-
-        # Append the borders to the stops
-        stops_borders_left += border_left.tolist()
-        stops_borders_right += border_right.tolist()
-
-    # Get the writing stops
-    stops = (numpy.array(stops_borders_right) - numpy.array(stops_borders_left)) * numpy.mean(time)
-    stops = numpy.array(stops)
-
-    # Return the writing stops
-    return stops
+    return WritingStopsUtils(sample_wrapper).get_writing_stops()
