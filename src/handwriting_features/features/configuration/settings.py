@@ -95,6 +95,21 @@ class HandwritingFeaturesSettings(object):
             }
         },
 
+        # Writing tempo
+        "writing_tempo": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {
+                "in_air": {
+                    "mandatory": False,
+                    "type": [bool],
+                    "options": (True, False),
+                    "default": False
+                }
+            }
+        },
+
         # -------------------
         # 2. Dynamic features
 

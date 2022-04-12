@@ -18,6 +18,7 @@ class HandwritingFeaturesMapping(object):
             "velocity": self.features.velocity,
             "acceleration": self.features.acceleration,
             "jerk": self.features.jerk,
+            "writing_tempo": self.features.writing_tempo,
 
             # 2. Dynamic features
             "azimuth": self.features.azimuth,

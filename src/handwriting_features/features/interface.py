@@ -57,6 +57,17 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         """
         return self.compute(self.wrapper, jerk, statistics=statistics, axis=axis, in_air=in_air)
 
+    def writing_tempo(self, in_air=False):
+        """
+        Extracts the writing tempo.
+
+        :param in_air: in-air flag, defaults to False
+        :type in_air: bool, optional
+        :return: writing tempo
+        :rtype: float
+        """
+        return self.compute(self.wrapper, writing_tempo, in_air=in_air)
+
     # -------------------
     # 2. Dynamic features
 
