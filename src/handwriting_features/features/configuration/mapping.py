@@ -18,7 +18,6 @@ class HandwritingFeaturesMapping(object):
             "velocity": self.features.velocity,
             "acceleration": self.features.acceleration,
             "jerk": self.features.jerk,
-            "writing_tempo": self.features.writing_tempo,
 
             # 2. Dynamic features
             "azimuth": self.features.azimuth,
@@ -40,7 +39,9 @@ class HandwritingFeaturesMapping(object):
             "writing_duration_overall": self.features.writing_duration_overall,
             "ratio_of_writing_durations": self.features.ratio_of_writing_durations,
             "number_of_interruptions": self.features.number_of_interruptions,
-            "number_of_interruptions_relative": self.features.number_of_interruptions_relative
+            "number_of_interruptions_relative": self.features.number_of_interruptions_relative,
+            "writing_tempo": self.features.writing_tempo,
+            "writing_stops": self.features.writing_stops,
         }
 
         # Map the feature name to the feature computation method

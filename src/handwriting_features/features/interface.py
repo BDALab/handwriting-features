@@ -57,17 +57,6 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         """
         return self.compute(self.wrapper, jerk, statistics=statistics, axis=axis, in_air=in_air)
 
-    def writing_tempo(self, in_air=False):
-        """
-        Extracts the writing tempo.
-
-        :param in_air: in-air flag, defaults to False
-        :type in_air: bool, optional
-        :return: writing tempo
-        :rtype: float
-        """
-        return self.compute(self.wrapper, writing_tempo, in_air=in_air)
-
     # -------------------
     # 2. Dynamic features
 
@@ -256,3 +245,25 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :rtype: float
         """
         return self.compute(self.wrapper, number_of_interruptions_relative)
+
+    def writing_tempo(self, in_air=False):
+        """
+        Extracts the writing tempo.
+
+        :param in_air: in-air flag, defaults to False
+        :type in_air: bool, optional
+        :return: writing tempo
+        :rtype: float
+        """
+        return self.compute(self.wrapper, writing_tempo, in_air=in_air)
+
+    def writing_stops(self, statistics=()):
+        """
+        Extracts the writing stops.
+
+        :param statistics: statistics to compute, defaults to ()
+        :type statistics: Any[list, tuple], optional
+        :return: writing stops
+        :rtype: numpy.ndarray or np.NaN
+        """
+        return self.compute(self.wrapper, writing_stops, statistics=statistics)

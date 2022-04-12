@@ -1,4 +1,10 @@
 import numpy
+from handwriting_features.data.utils.math import derivation
+from handwriting_features.features.implementation.conventional.utils import (
+    get_stroke_indexes,
+    get_borders,
+    fuze_pauses
+)
 
 
 def stroke_duration(sample_wrapper, in_air):
@@ -114,7 +120,7 @@ def number_of_interruptions(sample_wrapper):
     pen_status = sample_wrapper.sample_pen_status
 
     # Return the number of interruptions
-    return float(max(sum(abs(numpy.logical_xor(pen_status[0:-2], pen_status[1:-1]))), 0))
+    return float(max(sum(abs(numpy.logical_xor(pen_status[:-1], pen_status[1:]))), 0))
 
 
 def number_of_interruptions_relative(sample_wrapper):
@@ -133,3 +139,88 @@ def number_of_interruptions_relative(sample_wrapper):
 
     # Return the number of interruptions relative to the duration
     return interruptions / (duration + numpy.finfo(float).eps)
+
+
+def writing_tempo(sample_wrapper, in_air):
+    """
+    Returns writing tempo.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :param in_air: in-air flag
+    :type in_air: bool
+    :return: writing tempo
+    :rtype: float
+    """
+
+    # Import the sub-features (import here to avoid circular imports)
+    from handwriting_features.features.implementation.conventional.spatial import stroke_length
+
+    # Get the stroke lengths and durations
+    stroke_lengths = stroke_length(sample_wrapper, in_air)
+    stroke_durations = stroke_duration(sample_wrapper, in_air)
+
+    # Return the writing tempo
+    return len(stroke_lengths) / (sum(stroke_durations) + numpy.finfo(float).eps)
+
+
+def writing_stops(sample_wrapper):
+    """
+    Returns the writing stops.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :return: writing stops
+    :rtype: numpy.ndarray or np.NaN
+    """
+
+    # Get the strokes and their starting indices
+    strokes = sample_wrapper.strokes
+    indices = get_stroke_indexes([stroke for _, stroke in strokes])
+
+    # Prepare the stops
+    time = numpy.nan
+    stops_borders_left = []
+    stops_borders_right = []
+
+    # Extract the stops
+    for (pen_status, stroke), index in zip(strokes, indices):
+        if pen_status == "in_air":
+            continue
+
+        # Compute the vector of length, time
+        length = numpy.sqrt(numpy.power(derivation(stroke.x), 2) + numpy.power(derivation(stroke.y), 2))
+        time = derivation(stroke.time)
+
+        # Compute the vector of velocity (value <= 1 mm/s is set to 0)
+        velocity = (d / t for (d, t) in zip(length, time))
+        velocity = numpy.array([0 if v <= 1 else v for v in velocity])
+
+        # Get the number of samples equaling to 15 ms
+        num_samples = numpy.ceil(0.015 / numpy.mean(time))
+
+        # Identify the stops
+        border_left, border_right = get_borders(velocity)
+
+        # Take only pauses lasting at least 15 ms
+        pause_indices = numpy.where((border_right - border_left) > num_samples)[0]
+        border_left = border_left[pause_indices].astype(numpy.float)
+        border_right = border_right[pause_indices].astype(numpy.float)
+
+        # Fuze the pauses
+        border_left, border_right = fuze_pauses(border_left, border_right, num_samples)
+
+        # Add the starting index of the stroke
+        border_left += index
+        border_right += index - 1
+
+        # Append the borders to the stops
+        stops_borders_left += border_left.tolist()
+        stops_borders_right += border_right.tolist()
+
+    # Get the writing stops
+    stops = (numpy.array(stops_borders_right) - numpy.array(stops_borders_left)) * numpy.mean(time)
+    stops = numpy.array(stops)
+
+    # Return the writing stops
+    return stops

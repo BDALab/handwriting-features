@@ -95,21 +95,6 @@ class HandwritingFeaturesSettings(object):
             }
         },
 
-        # Writing tempo
-        "writing_tempo": {
-            "properties": {
-                "is_multi_valued": False
-            },
-            "arguments": {
-                "in_air": {
-                    "mandatory": False,
-                    "type": [bool],
-                    "options": (True, False),
-                    "default": False
-                }
-            }
-        },
-
         # -------------------
         # 2. Dynamic features
 
@@ -357,6 +342,35 @@ class HandwritingFeaturesSettings(object):
                 "is_multi_valued": False
             },
             "arguments": {}
+        },
+
+        # Writing tempo
+        "writing_tempo": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {
+                "in_air": {
+                    "mandatory": False,
+                    "type": [bool],
+                    "options": (True, False),
+                    "default": False
+                }
+            }
+        },
+
+        # Writing stops
+        "writing_stops": {
+            "properties": {
+                "is_multi_valued": True
+            },
+            "arguments": {
+                "statistics": {
+                    "mandatory": False,
+                    "type": [str, list, tuple],
+                    "options": statistics
+                }
+            }
         }
     }
 

@@ -1,6 +1,4 @@
 import numpy
-from handwriting_features.features.implementation.conventional.spatial import stroke_length
-from handwriting_features.features.implementation.conventional.temporal import stroke_duration
 
 
 def velocity(sample_wrapper, axis, in_air):
@@ -49,23 +47,3 @@ def jerk(sample_wrapper, axis, in_air):
     :rtype: numpy.ndarray or np.NaN
     """
     return sample_wrapper.compute_jerk(axis, in_air)
-
-
-def writing_tempo(sample_wrapper, in_air):
-    """
-    Returns writing tempo.
-
-    :param sample_wrapper: sample wrapper object
-    :type sample_wrapper: HandwritingSampleWrapper
-    :param in_air: in-air flag
-    :type in_air: bool
-    :return: writing tempo
-    :rtype: float
-    """
-
-    # Get the stroke lengths and durations
-    stroke_lengths = stroke_length(sample_wrapper, in_air)
-    stroke_durations = stroke_duration(sample_wrapper, in_air)
-
-    # Return the writing tempo
-    return len(stroke_lengths) / (sum(stroke_durations) + numpy.finfo(float).eps)
