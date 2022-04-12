@@ -327,6 +327,22 @@ class HandwritingFeaturesSettings(object):
             },
             "arguments": {}
         },
+
+        # Number of interruptions
+        "number_of_interruptions": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {}
+        },
+
+        # Number of interruptions relative to the duration
+        "number_of_interruptions_relative": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {}
+        }
     }
 
     @classmethod

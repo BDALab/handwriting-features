@@ -227,3 +227,21 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :rtype: float
         """
         return self.compute(self.wrapper, ratio_of_writing_durations)
+
+    def number_of_interruptions(self):
+        """
+        Extracts the number of interruptions.
+
+        :return: number of interruptions
+        :rtype: float
+        """
+        return self.compute(self.wrapper, number_of_interruptions)
+
+    def number_of_interruptions_relative(self):
+        """
+        Extracts the number of interruptions relative to the duration.
+
+        :return: number of interruptions relative to the duration
+        :rtype: float
+        """
+        return self.compute(self.wrapper, number_of_interruptions_relative)

@@ -37,7 +37,9 @@ class HandwritingFeaturesMapping(object):
             "ratio_of_stroke_durations": self.features.ratio_of_stroke_durations,
             "writing_duration": self.features.writing_duration,
             "writing_duration_overall": self.features.writing_duration_overall,
-            "ratio_of_writing_durations": self.features.ratio_of_writing_durations
+            "ratio_of_writing_durations": self.features.ratio_of_writing_durations,
+            "number_of_interruptions": self.features.number_of_interruptions,
+            "number_of_interruptions_relative": self.features.number_of_interruptions_relative
         }
 
         # Map the feature name to the feature computation method

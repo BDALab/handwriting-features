@@ -98,3 +98,38 @@ def ratio_of_writing_durations(sample_wrapper):
 
     # Return the ratio between the writing durations
     return on_surface_writing_duration / (in_air_writing_duration + numpy.finfo(float).eps)
+
+
+def number_of_interruptions(sample_wrapper):
+    """
+    Returns the number of interruptions.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :return: number of interruptions
+    :rtype: float
+    """
+
+    # Get the pen status
+    pen_status = sample_wrapper.sample_pen_status
+
+    # Return the number of interruptions
+    return float(max(sum(abs(numpy.logical_xor(pen_status[0:-2], pen_status[1:-1]))), 0))
+
+
+def number_of_interruptions_relative(sample_wrapper):
+    """
+    Returns the number of interruptions relative to the duration.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :return: number of interruptions relative to the duration
+    :rtype: float
+    """
+
+    # Get the number of interruptions and the overal writing duration
+    interruptions = number_of_interruptions(sample_wrapper)
+    duration = writing_duration_overall(sample_wrapper)
+
+    # Return the number of interruptions relative to the duration
+    return interruptions / (duration + numpy.finfo(float).eps)
