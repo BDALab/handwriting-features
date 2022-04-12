@@ -139,6 +139,39 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         """
         return self.compute(self.wrapper, stroke_width, statistics=statistics, in_air=in_air)
 
+    def writing_length(self, in_air=False):
+        """
+        Extracts the writing length.
+
+        :param in_air: in-air flag, defaults to False
+        :type in_air: bool, optional
+        :return: writing length
+        :rtype: float
+        """
+        return self.compute(self.wrapper, writing_length, in_air=in_air)
+
+    def writing_height(self, in_air=False):
+        """
+        Extracts the writing height.
+
+        :param in_air: in-air flag, defaults to False
+        :type in_air: bool, optional
+        :return: writing height
+        :rtype: float
+        """
+        return self.compute(self.wrapper, writing_height, in_air=in_air)
+
+    def writing_width(self, in_air=False):
+        """
+        Extracts the writing width.
+
+        :param in_air: in-air flag, defaults to False
+        :type in_air: bool, optional
+        :return: writing width
+        :rtype: float
+        """
+        return self.compute(self.wrapper, writing_width, in_air=in_air)
+
     # --------------------
     # 4. Temporal features
 
@@ -176,6 +209,15 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :rtype: float
         """
         return self.compute(self.wrapper, writing_duration, in_air=in_air)
+
+    def writing_duration_overall(self):
+        """
+        Extracts the overall writing duration.
+
+        :return: overall writing duration
+        :rtype: float
+        """
+        return self.compute(self.wrapper, writing_duration_overall)
 
     def ratio_of_writing_durations(self):
         """

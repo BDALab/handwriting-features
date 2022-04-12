@@ -28,11 +28,15 @@ class HandwritingFeaturesMapping(object):
             "stroke_length": self.features.stroke_length,
             "stroke_height": self.features.stroke_height,
             "stroke_width": self.features.stroke_width,
+            "writing_length": self.features.writing_length,
+            "writing_height": self.features.writing_height,
+            "writing_width": self.features.writing_width,
 
             # 4. Temporal features
             "stroke_duration": self.features.stroke_duration,
             "ratio_of_stroke_durations": self.features.ratio_of_stroke_durations,
             "writing_duration": self.features.writing_duration,
+            "writing_duration_overall": self.features.writing_duration_overall,
             "ratio_of_writing_durations": self.features.ratio_of_writing_durations
         }
 

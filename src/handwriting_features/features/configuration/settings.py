@@ -215,6 +215,51 @@ class HandwritingFeaturesSettings(object):
             }
         },
 
+        # Writing length
+        "writing_length": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {
+                "in_air": {
+                    "mandatory": False,
+                    "type": [bool],
+                    "options": (True, False),
+                    "default": False
+                }
+            }
+        },
+
+        # Writing height
+        "writing_height": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {
+                "in_air": {
+                    "mandatory": False,
+                    "type": [bool],
+                    "options": (True, False),
+                    "default": False
+                }
+            }
+        },
+
+        # Writing width
+        "writing_width": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {
+                "in_air": {
+                    "mandatory": False,
+                    "type": [bool],
+                    "options": (True, False),
+                    "default": False
+                }
+            }
+        },
+
         # --------------------
         # 4. Temporal features
 
@@ -265,6 +310,14 @@ class HandwritingFeaturesSettings(object):
                     "default": False
                 }
             }
+        },
+
+        # Writing duration overall
+        "writing_duration_overall": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {}
         },
 
         # Ratio of writing durations

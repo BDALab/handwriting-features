@@ -66,6 +66,18 @@ def writing_duration(sample_wrapper, in_air):
     return numpy.sum(stroke_duration(sample_wrapper, in_air))
 
 
+def writing_duration_overall(sample_wrapper):
+    """
+    Returns overall writing duration.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :return: overall writing duration
+    :rtype: float
+    """
+    return float(sample_wrapper.sample_time[-1] - sample_wrapper.sample_time[0])
+
+
 def ratio_of_writing_durations(sample_wrapper):
     """
     Returns ratio of writing durations: on-surface / in-air.
