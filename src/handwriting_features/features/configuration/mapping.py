@@ -40,8 +40,11 @@ class HandwritingFeaturesMapping(object):
             "ratio_of_writing_durations": self.features.ratio_of_writing_durations,
             "number_of_interruptions": self.features.number_of_interruptions,
             "number_of_interruptions_relative": self.features.number_of_interruptions_relative,
+
+            # 5. Composite features
             "writing_tempo": self.features.writing_tempo,
             "writing_stops": self.features.writing_stops,
+            "writing_number_of_changes": self.features.writing_number_of_changes
         }
 
         # Map the feature name to the feature computation method

@@ -344,6 +344,9 @@ class HandwritingFeaturesSettings(object):
             "arguments": {}
         },
 
+        # ---------------------
+        # 5. Composite features
+
         # Writing tempo
         "writing_tempo": {
             "properties": {
@@ -370,6 +373,13 @@ class HandwritingFeaturesSettings(object):
                     "type": [str, list, tuple],
                     "options": statistics
                 }
+            }
+        },
+
+        # Writing number of changes
+        "writing_number_of_changes": {
+            "properties": {
+                "is_multi_valued": False
             }
         }
     }

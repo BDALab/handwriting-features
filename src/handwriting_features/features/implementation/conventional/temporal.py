@@ -1,5 +1,4 @@
 import numpy
-from handwriting_features.features.implementation.conventional.utils.temporal import WritingStopsUtils
 
 
 def stroke_duration(sample_wrapper, in_air):
@@ -134,38 +133,3 @@ def number_of_interruptions_relative(sample_wrapper):
 
     # Return the number of interruptions relative to the duration
     return interruptions / (duration + numpy.finfo(float).eps)
-
-
-def writing_tempo(sample_wrapper, in_air):
-    """
-    Returns writing tempo.
-
-    :param sample_wrapper: sample wrapper object
-    :type sample_wrapper: HandwritingSampleWrapper
-    :param in_air: in-air flag
-    :type in_air: bool
-    :return: writing tempo
-    :rtype: float
-    """
-
-    # Import the sub-features (import here to avoid circular imports)
-    from handwriting_features.features.implementation.conventional.spatial import stroke_length
-
-    # Get the stroke lengths and durations
-    stroke_lengths = stroke_length(sample_wrapper, in_air)
-    stroke_durations = stroke_duration(sample_wrapper, in_air)
-
-    # Return the writing tempo
-    return len(stroke_lengths) / (sum(stroke_durations) + numpy.finfo(float).eps)
-
-
-def writing_stops(sample_wrapper):
-    """
-    Returns the writing stops.
-
-    :param sample_wrapper: sample wrapper object
-    :type sample_wrapper: HandwritingSampleWrapper
-    :return: writing stops
-    :rtype: numpy.ndarray or np.NaN
-    """
-    return WritingStopsUtils(sample_wrapper).get_writing_stops()

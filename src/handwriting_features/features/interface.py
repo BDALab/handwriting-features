@@ -246,6 +246,9 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         """
         return self.compute(self.wrapper, number_of_interruptions_relative)
 
+    # ---------------------
+    # 5. Composite features
+
     def writing_tempo(self, in_air=False):
         """
         Extracts the writing tempo.
@@ -267,3 +270,12 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :rtype: numpy.ndarray or np.NaN
         """
         return self.compute(self.wrapper, writing_stops, statistics=statistics)
+
+    def writing_number_of_changes(self):
+        """
+        Extracts the number of writing changes.
+
+        :return: number of writing changes
+        :rtype: numpy.ndarray or np.NaN
+        """
+        return self.compute(self.wrapper, writing_number_of_changes)
