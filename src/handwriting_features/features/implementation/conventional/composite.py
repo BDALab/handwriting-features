@@ -1,7 +1,8 @@
-import numpy
-from handwriting_features.features.implementation.conventional.spatial import stroke_length
-from handwriting_features.features.implementation.conventional.temporal import stroke_duration
-from handwriting_features.features.implementation.conventional.utils.composite import WritingStopsUtils
+from handwriting_features.features.implementation.conventional.utils.composite import (
+    WritingTempoUtils,
+    WritingStopsUtils,
+    WritingNumberOfChangesUtils
+)
 
 
 def writing_tempo(sample_wrapper, in_air):
@@ -15,13 +16,7 @@ def writing_tempo(sample_wrapper, in_air):
     :return: writing tempo
     :rtype: float
     """
-
-    # Get the stroke lengths and durations
-    stroke_lengths = stroke_length(sample_wrapper, in_air)
-    stroke_durations = stroke_duration(sample_wrapper, in_air)
-
-    # Return the writing tempo
-    return len(stroke_lengths) / (sum(stroke_durations) + numpy.finfo(float).eps)
+    WritingTempoUtils(sample_wrapper, in_air).get_writing_tempo()
 
 
 def writing_stops(sample_wrapper):
@@ -36,13 +31,19 @@ def writing_stops(sample_wrapper):
     return WritingStopsUtils(sample_wrapper).get_writing_stops()
 
 
-def writing_number_of_changes(sample_wrapper):
+def writing_number_of_changes(sample_wrapper, fs, fc=None, n=None):
     """
     Returns the number of writing changes.
 
     :param sample_wrapper: sample wrapper object
     :type sample_wrapper: HandwritingSampleWrapper
-    :return: number of writing interruptions
+    :param fs: sampling frequency
+    :type fs: float
+    :param fc: cutoff frequency for the low-pass filter, defaults to None
+    :type fc: float, optional
+    :param n: number of samples of a Gaussian filter, defaults to None
+    :type n: int
+    :return: number of writing changes
     :rtype: numpy.ndarray or np.NaN
     """
-    pass
+    return WritingNumberOfChangesUtils(sample_wrapper).get_number_of_changes(fs, fc=fc, n=n)

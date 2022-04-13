@@ -66,7 +66,15 @@ class SingleSubjectFeatureUtils(object):
 
             # Handle multi-values feature
             if len(labels) > 1:
-                labels = [f"{label}(sample-{i})" for i, label in enumerate(labels, 1)]
+                preset = None
+                if cls.features_settings.settings.get(feature_name, {}).get("properties", {}).get("is_composite"):
+                    preset = cls.features_settings.settings[feature_name]["properties"].get("composite_feature_names")
+                    if preset:
+                        labels = preset \
+                            if len(preset) == len(labels) \
+                            else preset + [f"{label}(missing name specification)" for label in labels[len(preset):]]
+                if not preset:
+                    labels = [f"{label}(sample-{i})" for i, label in enumerate(labels, 1)]
 
         # Add the axis information
         if feature_args.get("axis"):

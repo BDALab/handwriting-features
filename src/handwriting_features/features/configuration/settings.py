@@ -379,7 +379,28 @@ class HandwritingFeaturesSettings(object):
         # Writing number of changes
         "writing_number_of_changes": {
             "properties": {
-                "is_multi_valued": False
+                "is_multi_valued": False,
+                "is_composite": True,
+                "composite_feature_names": [
+                    "number_of_changes_in_x_profile",
+                    "number_of_changes_in_y_profile",
+                    "number_of_changes_in_azimuth",
+                    "number_of_changes_in_tilt",
+                    "number_of_changes_in_pressure",
+                    "number_of_changes_in_velocity",
+                    "relative_number_of_changes_in_x_profile",
+                    "relative_number_of_changes_in_y_profile",
+                    "relative_number_of_changes_in_azimuth",
+                    "relative_number_of_changes_in_tilt",
+                    "relative_number_of_changes_in_pressure",
+                    "relative_number_of_changes_in_velocity"
+                ]
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                }
             }
         }
     }

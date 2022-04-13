@@ -1,5 +1,19 @@
 import numpy
 from handwriting_features.data.utils.math import derivation
+from handwriting_features.features.implementation.conventional.spatial import stroke_length
+from handwriting_features.features.implementation.conventional.temporal import stroke_duration
+
+
+class WritingTempoUtils(object):
+    """Class implementing writing tempo utils"""
+
+    def __init__(self, sample_wrapper, in_air):
+        self.stroke_lengths = stroke_length(sample_wrapper, in_air)
+        self.stroke_durations = stroke_duration(sample_wrapper, in_air)
+
+    def get_writing_tempo(self):
+        """Extracts the writing tempo"""
+        return len(self.stroke_lengths) / (sum(self.stroke_durations) + numpy.finfo(float).eps)
 
 
 class WritingStopsUtils(object):
@@ -98,7 +112,7 @@ class WritingStopsUtils(object):
 
     @classmethod
     def _fuze_pauses(cls, border_left, border_right, num_samples):
-        """Fuze the pauses"""
+        """Fuzes the pauses"""
 
         # Fuze the pauses
         if len(border_left) > 1:
@@ -130,3 +144,43 @@ class WritingStopsUtils(object):
 
         # Return the fused pauses
         return border_left, border_right
+
+
+# TODO: in progress
+class WritingNumberOfChangesUtils(object):
+    """Class implementing writing number of changes utils"""
+
+    # Default computational arguments
+    fc = 17.5
+    n = 50
+
+    def __init__(self, sample_wrapper):
+        pass
+
+    def get_number_of_changes(self, fs, fc=None, n=None):
+        """Extracts the number of writing changes
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param fc: cutoff frequency for the low-pass filter, defaults to 17.5
+        :type fc: float, optional
+        :param n: number of samples of a Gaussian filter, defaults to 50
+        :type n: int
+        :return: number of writing changes
+        :rtype: numpy.ndarray or numpy.NaN
+        """
+
+        # Check the arguments
+        fc = fc if fc else self.fc
+        n = n if n else self.n
+
+        # Return the number of changes
+        return numpy.array([1.0, 2.0] * 6)
+
+    def _filter_with_low_pass_filter(self, signal):
+        """Filters an input signal by a low-pass filter"""
+        pass
+
+    def _filter_with_gaussian_filter(self, signal):
+        """Filters an input signal by a Gaussian filter"""
+        pass

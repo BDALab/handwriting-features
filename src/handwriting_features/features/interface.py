@@ -271,11 +271,17 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         """
         return self.compute(self.wrapper, writing_stops, statistics=statistics)
 
-    def writing_number_of_changes(self):
+    def writing_number_of_changes(self, fs, fc=None, n=None):
         """
         Extracts the number of writing changes.
 
+        :param fs: sampling frequency
+        :type fs: float
+        :param fc: cutoff frequency for the low-pass filter, defaults to None
+        :type fc: float, optional
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int
         :return: number of writing changes
         :rtype: numpy.ndarray or np.NaN
         """
-        return self.compute(self.wrapper, writing_number_of_changes)
+        return self.compute(self.wrapper, writing_number_of_changes, fs=fs, fc=fc, n=n)
