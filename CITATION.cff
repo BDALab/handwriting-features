@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Galaz"
+  given-names: "Zoltan"
+  orcid: "https://orcid.org/0000-0002-8978-351X"
+- family-names: "Mucha"
+  given-names: "Jan"
+  orcid: "https://orcid.org/0000-0001-5126-440X"
+- family-names: "Zvoncak"
+  given-names: "Vojtech"
+  orcid: "https://orcid.org/0000-0002-1948-4653"
+- family-names: "Mekyska"
+  given-names: "Jiri"
+  orcid: "https://orcid.org/0000-0002-6195-193X"
+title: "Handwriting features"
+version: 1.0.1
+date-released: 2022-03-30
+url: "https://github.com/BDALab/handwriting-features/commits/main"
