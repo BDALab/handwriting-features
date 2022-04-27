@@ -47,11 +47,21 @@ The following list of handwriting features is supported:
    1. stroke length
    2. stroke height
    3. stroke width
+   4. writing length
+   5. writing height
+   6. writing width
 4. temporal features
    1. stroke duration
    2. ratio of stroke durations (on-surface / in-air strokes)
    3. writing duration
-   4. ratio of writing durations (on-surface / in-air writing)
+   4. writing duration overall
+   5. ratio of writing durations (on-surface / in-air writing)
+   6. number of interruptions
+   7. number of interruptions relative
+5. composite features
+   1. writing tempo
+   2. writing stops
+   3. writing number of changes
 
 ## Usage
 
@@ -79,17 +89,27 @@ After the `HandwritingFeatures` object is instantiated, the supported handwritin
    1. `stroke_length`
    2. `stroke_height`
    3. `stroke_width`
+   4. `writing_length`
+   5. `writing_height`
+   6. `writing_width`
 4. temporal features
    1. `stroke_duration`
    2. `ratio_of_stroke_durations`
    3. `writing_duration`
-   4. `ratio_of_writing_durations`
+   4. `writing_duration_overall`
+   5. `ratio_of_writing_durations`
+   6. `number_of_interruptions`
+   7. `number_of_interruptions_relative`
+5. composite features
+   1. `writing_tempo`
+   2. `writing_stops`
+   3. `writing_number_of_changes`
 
 For more information, see the [Examples](#Examples) section.
 
 ## Interface
 
-Besides the convenient use of the `HandwritingFeatures` interface class, the library also provides an interface for the [Featurizer API](https://github.com/BDALab/featurizer-api/) at `src/handwriting_features/interface/featurizer/`. The Featurizer API supports the feature extraction from handwriting data of 1-M subjects given the pipeline of features. This offers an additional option to extract a variety of handwriting features via a micro-service type of architecture via injecting the handwriting features library into the API as the feature extractor to be used. For more information, see the [official documentation](https://featurizer-api.readthedocs.io/en/latest/) of the Featurizer API.
+Besides, the convenient use of the `HandwritingFeatures` interface class, the library also provides an interface for the [Featurizer API](https://github.com/BDALab/featurizer-api/) at `src/handwriting_features/interface/featurizer/`. The Featurizer API supports the feature extraction from handwriting data of 1-M subjects given the pipeline of features. This offers an additional option to extract a variety of handwriting features via a micro-service type of architecture via injecting the handwriting features library into the API as the feature extractor to be used. For more information, see the [official documentation](https://featurizer-api.readthedocs.io/en/latest/) of the Featurizer API.
 
 ## Examples
 
@@ -120,10 +140,12 @@ signal_name = "00026_w.cz.fnusa.1_1.svc"
 # Prepare the handwriting variables
 variables = ["y", "x", "time", "pen_status", "azimuth", "tilt", "pressure"]
 
-
 # Instantiate the handwriting features object from an example signal
 feature_path = str(os.path.join(data_path, subject_group, signal_name))
 feature_data = HandwritingFeatures.from_svc(feature_path, variables)
+
+# Prepare the sampling frequency
+fs = 133
 
 # Handwriting features:
 #
@@ -139,11 +161,21 @@ feature_data = HandwritingFeatures.from_svc(feature_path, variables)
 #    a) stroke length
 #    b) stroke height
 #    c) stroke width
+#    d) writing length
+#    e) writing height
+#    f) writing width
 # 4. Temporal features
 #    a) stroke duration
 #    b) ratio of stroke durations (on-surface / in-air strokes)
 #    c) writing duration
-#    d) ratio of writing durations (on-surface / in-air writing)
+#    d) writing duration overall
+#    e) ratio of writing durations (on-surface / in-air writing)
+#    f) number of interruptions
+#    g) number of interruptions_relative
+# 5. Composite features
+#    a) writing tempo
+#    b) writing stops
+#    c) writing number of changes
 
 # 1. Kinematic features
 feature_data.velocity(axis="x", in_air=False, statistics=["mean", "std"])
@@ -165,6 +197,11 @@ feature_data.stroke_duration(in_air=False, statistics=["percentile_5", "percenti
 feature_data.ratio_of_stroke_durations(statistics=())
 feature_data.writing_duration(in_air=True)
 feature_data.ratio_of_writing_durations()
+
+# 5. Composite features
+feature_data.writing_tempo(in_air=False)
+feature_data.writing_stops(statistics=["mean", "std"])
+feature_data.writing_number_of_changes(in_air=True, fs=fs)
 ```
 
 ### 2. plot handwriting features
@@ -199,6 +236,9 @@ feature_data = HandwritingFeatures.from_svc(feature_path, variables)
 # Extract the loaded data (wrapped handwriting sample)
 loaded_data = feature_data.wrapper
 
+# Prepare the sampling frequency
+fs = 133
+
 # Handwriting features:
 #
 # 1. Kinematic features
@@ -213,11 +253,21 @@ loaded_data = feature_data.wrapper
 #    a) stroke length
 #    b) stroke height
 #    c) stroke width
+#    d) writing length
+#    e) writing height
+#    f) writing width
 # 4. Temporal features
 #    a) stroke duration
 #    b) ratio of stroke durations (on-surface / in-air strokes)
 #    c) writing duration
-#    d) ratio of writing durations (on-surface / in-air writing)
+#    d) writing duration overall
+#    e) ratio of writing durations (on-surface / in-air writing)
+#    f) number of interruptions
+#    g) number of interruptions_relative
+# 5. Composite features
+#    a) writing tempo
+#    b) writing stops
+#    c) writing number of changes
 
 # Prepare the features computation
 axis = "x"
@@ -244,6 +294,11 @@ feature = feature_data.velocity(axis=axis, in_air=in_air, statistics=statistics)
 # feature = feature_data.ratio_of_stroke_durations(statistics=statistics)
 # feature = feature_data.writing_duration(in_air=in_air)
 # feature = feature_data.ratio_of_writing_durations()
+
+# 5. Compute the composite features
+# feature_data.writing_tempo(in_air=False)
+# feature_data.writing_stops(statistics=["mean", "std"])
+# feature_data.writing_number_of_changes(in_air=True, fs=fs)
 
 pprint(feature)
 

@@ -23,11 +23,11 @@ variables = ["y", "x", "time", "pen_status", "azimuth", "tilt", "pressure"]
 
 if __name__ == "__main__":
 
-    # Spatial features:
+    # Composite features:
     #
-    # 1. stroke_length
-    # 2. stroke_height
-    # 3. stroke_width
+    # 1. writing tempo
+    # 2. writing stops
+    # 3. writing number of changes
 
     # Instantiate the handwriting features object from an example signal
     feature_sample = HandwritingFeatures.from_svc(os.path.join(data_path, subject_group, signal_name), variables)
@@ -39,10 +39,13 @@ if __name__ == "__main__":
     in_air = False
     statistics = ()
 
-    # Compute the spatial features
-    feature = feature_sample.stroke_length(in_air=in_air, statistics=statistics)
-    # feature = feature_sample.stroke_height(in_air=in_air, statistics=statistics)
-    # feature = feature_sample.stroke_width(in_air=in_air, statistics=statistics)
+    # Prepare the sampling frequency
+    fs = 133
+
+    # Compute the composite features
+    feature = feature_sample.writing_tempo(in_air=in_air)
+    # feature = feature_sample.writing_stops(statistics=statistics)
+    # feature = feature_sample.writing_number_of_changes(in_air=in_air, fs=fs)
 
     pprint(feature)
 

@@ -46,4 +46,4 @@ def writing_number_of_changes(sample_wrapper, fs, fc=None, n=None):
     :return: number of writing changes
     :rtype: numpy.ndarray or np.NaN
     """
-    return WritingNumberOfChangesUtils(sample_wrapper).get_number_of_changes(fs, fc=fc, n=n)
+    return WritingNumberOfChangesUtils(sample_wrapper, fs=fs, fc=fc, n=n).get_number_of_changes()

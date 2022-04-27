@@ -57,7 +57,7 @@ if __name__ == "__main__":
         ax.yaxis.grid(True)
         ax.xaxis.grid(True)
 
-        # Plot the original data
+        # Plot the feature
         ax = fig.add_subplot(1, 2, 2)
         ax.plot(feature, "-", color="red", linewidth=2, alpha=0.7)
         ax.yaxis.grid(True)

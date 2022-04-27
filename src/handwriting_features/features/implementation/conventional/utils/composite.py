@@ -1,5 +1,7 @@
 import numpy
+from copy import deepcopy
 from handwriting_features.data.utils.math import derivation
+from handwriting_features.data.utils.dsp import LowPassFilter, GaussianFilter
 from handwriting_features.features.implementation.conventional.spatial import stroke_length
 from handwriting_features.features.implementation.conventional.temporal import stroke_duration
 
@@ -8,6 +10,9 @@ class WritingTempoUtils(object):
     """Class implementing writing tempo utils"""
 
     def __init__(self, sample_wrapper, in_air):
+        """Initializes the writing tempo utils object"""
+
+        # Set the stroke lengths and durations
         self.stroke_lengths = stroke_length(sample_wrapper, in_air)
         self.stroke_durations = stroke_duration(sample_wrapper, in_air)
 
@@ -20,6 +25,9 @@ class WritingStopsUtils(object):
     """Class implementing writing stops utils"""
 
     def __init__(self, sample_wrapper):
+        """Initializes the writing stops utils object"""
+
+        # Set the strokes and indices
         self.strokes = sample_wrapper.strokes
         self.indices = self._get_stroke_indexes([stroke for _, stroke in self.strokes])
 
@@ -146,7 +154,6 @@ class WritingStopsUtils(object):
         return border_left, border_right
 
 
-# TODO: in progress
 class WritingNumberOfChangesUtils(object):
     """Class implementing writing number of changes utils"""
 
@@ -154,11 +161,9 @@ class WritingNumberOfChangesUtils(object):
     fc = 17.5
     n = 50
 
-    def __init__(self, sample_wrapper):
-        pass
-
-    def get_number_of_changes(self, fs, fc=None, n=None):
-        """Extracts the number of writing changes
+    def __init__(self, sample_wrapper, fs, fc=None, n=None):
+        """
+        Initializes the writing number of changes utils object.
 
         :param fs: sampling frequency
         :type fs: float
@@ -166,21 +171,125 @@ class WritingNumberOfChangesUtils(object):
         :type fc: float, optional
         :param n: number of samples of a Gaussian filter, defaults to 50
         :type n: int
-        :return: number of writing changes
-        :rtype: numpy.ndarray or numpy.NaN
         """
 
-        # Check the arguments
-        fc = fc if fc else self.fc
-        n = n if n else self.n
+        # Set the sample wrapper
+        self.sample_wrapper = deepcopy(sample_wrapper)
+
+        # Set the DSP arguments
+        self.fs = fs
+        self.fc = fc if fc else WritingNumberOfChangesUtils.fc
+        self.n = n if n else WritingNumberOfChangesUtils.n
+
+        # Set the filter instances
+        self.low_pass_filter = LowPassFilter(self.fs, self.fc)
+        self.gaussian_filter = GaussianFilter(self.fs, self.n)
+
+    def get_number_of_changes(self):
+        """Extracts the number of writing changes"""
+
+        # Get the duration
+        duration = self.sample_wrapper.sample_time[-1] - self.sample_wrapper.sample_time[0]
+
+        # Filter x, y, azimuth, tilt, and pressure by a low-pass filter
+        self.sample_wrapper.sample = self._filter_data_with_low_pass_filter(self.sample_wrapper.sample)
+
+        # Get the on-surface strokes
+        strokes = self.sample_wrapper.on_surface_strokes
+
+        # Prepare the output variables
+        changes_x = 0
+        changes_y = 0
+        changes_azimuth = 0
+        changes_tilt = 0
+        changes_pressure = 0
+        changes_velocity = 0
+
+        # Get the number of changes
+        for stroke in strokes:
+
+            # Compute the vector of length, time, and velocity
+            length = numpy.sqrt(numpy.power(derivation(stroke.x), 2) + numpy.power(derivation(stroke.y), 2))
+            time = derivation(stroke.time)
+            velocity = numpy.array([d / t for (d, t) in zip(length, time)])
+
+            # Filter x, y, azimuth, tilt, pressure, and velocity by a Gaussian filter
+            stroke = self._filter_data_with_gaussian_filter(stroke)
+            velocity = self._filter_velocity_with_gaussian_filter(velocity)
+
+            # Compute the number of changes
+            changes_x += self._get_changes(stroke.x)
+            changes_y += self._get_changes(stroke.y)
+            changes_azimuth += self._get_changes(stroke.azimuth)
+            changes_tilt += self._get_changes(stroke.tilt)
+            changes_pressure += self._get_changes(stroke.pressure)
+            changes_velocity += self._get_changes(velocity)
+
+        # Get the relative number of changes
+        relative_changes_x = changes_x / duration
+        relative_changes_y = changes_y / duration
+        relative_changes_azimuth = changes_azimuth / duration
+        relative_changes_tilt = changes_tilt / duration
+        relative_changes_pressure = changes_pressure / duration
+        relative_changes_velocity = changes_velocity / duration
 
         # Return the number of changes
-        return numpy.array([1.0, 2.0] * 6)
+        return numpy.array([
+            changes_x,
+            changes_y,
+            changes_azimuth,
+            changes_tilt,
+            changes_pressure,
+            changes_velocity,
+            relative_changes_x,
+            relative_changes_y,
+            relative_changes_azimuth,
+            relative_changes_tilt,
+            relative_changes_pressure,
+            relative_changes_velocity
+        ])
 
-    def _filter_with_low_pass_filter(self, signal):
-        """Filters an input signal by a low-pass filter"""
-        pass
+    @classmethod
+    def _get_changes(cls, signal):
+        """Gets the changes"""
 
-    def _filter_with_gaussian_filter(self, signal):
-        """Filters an input signal by a Gaussian filter"""
-        pass
+        # Get the left/right side changes
+        changes_left = numpy.sum(numpy.logical_and(signal[1:-1] > signal[:-2], signal[1:-1] > signal[2:]))
+        changes_right = numpy.sum(numpy.logical_and(signal[1:-1] < signal[:-2], signal[1:-1] < signal[2:]))
+
+        # Return the changes
+        return changes_left + changes_right
+
+    def _filter_data_with_low_pass_filter(self, signal):
+        """Filters an input sample/stroke data by a low-pass filter"""
+
+        # Filter the signal
+        signal.x = self.low_pass_filter.filter(signal.x)
+        signal.y = self.low_pass_filter.filter(signal.y)
+        signal.azimuth = self.low_pass_filter.filter(signal.azimuth)
+        signal.tilt = self.low_pass_filter.filter(signal.tilt)
+        signal.pressure = self.low_pass_filter.filter(signal.pressure)
+
+        # Return the filtered signal
+        return signal
+
+    def _filter_data_with_gaussian_filter(self, signal):
+        """Filters an input sample/stroke data by a Gaussian filter"""
+
+        # Filter the signal
+        signal.x = self.gaussian_filter.filter(signal.x)
+        signal.y = self.gaussian_filter.filter(signal.y)
+        signal.azimuth = self.gaussian_filter.filter(signal.azimuth)
+        signal.tilt = self.gaussian_filter.filter(signal.tilt)
+        signal.pressure = self.gaussian_filter.filter(signal.pressure)
+
+        # Return the filtered signal
+        return signal
+
+    def _filter_velocity_with_low_pass_filter(self, velocity):
+        """Filters an input velocity by a low-pass filter"""
+        return self.low_pass_filter.filter(velocity)
+
+    def _filter_velocity_with_gaussian_filter(self, velocity):
+        """Filters an input velocity by a Gaussian filter"""
+        return self.gaussian_filter.filter(velocity)

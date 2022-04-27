@@ -18,6 +18,9 @@ signal_name = "00026_w.cz.fnusa.1_1.svc"
 # Prepare the handwriting variables
 variables = ["y", "x", "time", "pen_status", "azimuth", "tilt", "pressure"]
 
+# Prepare the sampling frequency
+fs = 133
+
 
 if __name__ == "__main__":
 
@@ -38,11 +41,21 @@ if __name__ == "__main__":
     #    a) stroke length
     #    b) stroke height
     #    c) stroke width
+    #    d) writing length
+    #    e) writing height
+    #    f) writing width
     # 4. Temporal features
     #    a) stroke duration
     #    b) ratio of stroke durations (on-surface / in-air strokes)
     #    c) writing duration
-    #    d) ratio of writing durations (on-surface / in-air writing)
+    #    d) writing duration overall
+    #    e) ratio of writing durations (on-surface / in-air writing)
+    #    f) number of interruptions
+    #    g) number of interruptions_relative
+    # 5. Composite features
+    #    a) writing tempo
+    #    b) writing stops
+    #    c) writing number of changes
 
     # 1. Kinematic features
     feature_sample.velocity(axis="x", in_air=False, statistics=["mean", "std"])
@@ -64,3 +77,8 @@ if __name__ == "__main__":
     feature_sample.ratio_of_stroke_durations(statistics=())
     feature_sample.writing_duration(in_air=True)
     feature_sample.ratio_of_writing_durations()
+
+    # 5. Composite features
+    feature_sample.writing_tempo(in_air=False)
+    feature_sample.writing_stops(statistics=["mean", "std"])
+    feature_sample.writing_number_of_changes(in_air=True, fs=fs)
