@@ -10,7 +10,8 @@ packages = find_packages(where="src")
 requires = [
     "numpy",
     "pandas",
-    "handwriting-sample"
+    "scipy",
+    "handwriting-sample",
 ]
 
 # Prepare the setup
