@@ -1,8 +1,24 @@
 handwriting\_features.features.implementation.conventional package
 ==================================================================
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   handwriting_features.features.implementation.conventional.utils
+
 Submodules
 ----------
+
+handwriting\_features.features.implementation.conventional.composite module
+---------------------------------------------------------------------------
+
+.. automodule:: handwriting_features.features.implementation.conventional.composite
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 handwriting\_features.features.implementation.conventional.dynamic module
 -------------------------------------------------------------------------

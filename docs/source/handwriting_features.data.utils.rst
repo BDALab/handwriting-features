@@ -12,6 +12,14 @@ handwriting\_features.data.utils.cleanup module
    :undoc-members:
    :show-inheritance:
 
+handwriting\_features.data.utils.dsp module
+-------------------------------------------
+
+.. automodule:: handwriting_features.data.utils.dsp
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 handwriting\_features.data.utils.iteration module
 -------------------------------------------------
 

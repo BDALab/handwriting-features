@@ -18,12 +18,12 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- Project information -----------------------------------------------------
 
 project = 'Handwriting Features'
-copyright = '2021, BDALab'
+copyright = '2022, BDALab'
 author = 'BDALab'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
-version = '1.0.0'
+release = '0.0.2'
+version = '1.0.2'
 
 
 # -- General configuration ---------------------------------------------------
