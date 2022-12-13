@@ -1,4 +1,5 @@
 import numpy
+import functools
 from handwriting_features.data.utils.math import intersection
 
 
@@ -50,6 +51,7 @@ class IntersectionUtils(object):
         """Extracts the relative number of inter-stroke intersections"""
         return 0. if not self.on_surface_strokes else round(float(self.rel_num_inter), 6)
 
+    @functools.lru_cache(maxsize=1)
     def _compute_intersections(self):
         """Computes the intra-stroke and inter-stroke intersections"""
 
