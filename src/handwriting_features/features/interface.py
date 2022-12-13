@@ -172,6 +172,64 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         """
         return self.compute(self.wrapper, writing_width, in_air=in_air)
 
+    def number_of_intra_stroke_intersections(self, statistics=()):
+        """
+        Extracts the number of intra-stroke intersections.
+
+        :param statistics: statistics to compute, defaults to ()
+        :type statistics: Any[list, tuple], optional
+        :return: number of intra-stroke intersections
+        :rtype: numpy.ndarray or np.NaN
+        """
+        return self.compute(self.wrapper, number_of_intra_stroke_intersections, statistics=statistics)
+
+    def relative_number_of_intra_stroke_intersections(self, statistics=()):
+        """
+        Extracts the relative number of intra-stroke intersections.
+
+        :param statistics: statistics to compute, defaults to ()
+        :type statistics: Any[list, tuple], optional
+        :return: relative number of intra-stroke intersections
+        :rtype: numpy.ndarray or np.NaN
+        """
+        return self.compute(self.wrapper, relative_number_of_intra_stroke_intersections, statistics=statistics)
+
+    def total_number_of_intra_stroke_intersections(self):
+        """
+        Extracts the total number of intra-stroke intersections.
+
+        :return: total number of intra-stroke intersections
+        :rtype: int
+        """
+        return self.compute(self.wrapper, total_number_of_intra_stroke_intersections)
+
+    def relative_total_number_of_intra_stroke_intersections(self):
+        """
+        Extracts the relative total number of intra-stroke intersections.
+
+        :return: relative total number of intra-stroke intersections
+        :rtype: float
+        """
+        return self.compute(self.wrapper, relative_total_number_of_intra_stroke_intersections)
+
+    def number_of_inter_stroke_intersections(self):
+        """
+        Extracts the number of inter-stroke intersections.
+
+        :return: number of inter-stroke intersections
+        :rtype: int
+        """
+        return self.compute(self.wrapper, number_of_inter_stroke_intersections)
+
+    def relative_number_of_inter_stroke_intersections(self):
+        """
+        Extracts the relative number of inter-stroke intersections.
+
+        :return: relative number of inter-stroke intersections
+        :rtype: float
+        """
+        return self.compute(self.wrapper, relative_number_of_inter_stroke_intersections)
+
     # --------------------
     # 4. Temporal features
 

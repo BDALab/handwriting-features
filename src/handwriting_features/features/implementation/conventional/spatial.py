@@ -1,5 +1,6 @@
 import numpy
 from handwriting_features.data.utils.math import derivation
+from handwriting_features.features.implementation.conventional.utils.spatial import IntersectionUtils
 
 
 def stroke_length(sample_wrapper, in_air):
@@ -154,3 +155,75 @@ def writing_width(sample_wrapper, in_air):
 
     # Return the writing width
     return float(numpy.max(sample.x) - numpy.min(sample.x))
+
+
+def number_of_intra_stroke_intersections(sample_wrapper):
+    """
+    Returns number of intra-stroke intersections.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :return: number of intra-stroke intersections
+    :rtype: numpy.ndarray or np.NaN
+    """
+    return IntersectionUtils(sample_wrapper).get_number_of_intra_stroke_intersections()
+
+
+def relative_number_of_intra_stroke_intersections(sample_wrapper):
+    """
+    Returns relative number of intra-stroke intersections.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :return: relative number of intra-stroke intersections
+    :rtype: numpy.ndarray or np.NaN
+    """
+    return IntersectionUtils(sample_wrapper).get_relative_number_of_intra_stroke_intersections()
+
+
+def total_number_of_intra_stroke_intersections(sample_wrapper):
+    """
+    Returns total number of intra-stroke intersections.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :return: total number of intra-stroke intersections
+    :rtype: int
+    """
+    return IntersectionUtils(sample_wrapper).get_total_number_of_intra_stroke_intersections()
+
+
+def relative_total_number_of_intra_stroke_intersections(sample_wrapper):
+    """
+    Returns relative total number of intra-stroke intersections.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :return: relative total number of intra-stroke intersections
+    :rtype: float
+    """
+    return IntersectionUtils(sample_wrapper).get_relative_total_number_of_intra_stroke_intersections()
+
+
+def number_of_inter_stroke_intersections(sample_wrapper):
+    """
+    Returns number of inter-stroke intersections.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :return: number of inter-stroke intersections
+    :rtype: int
+    """
+    return IntersectionUtils(sample_wrapper).get_number_of_inter_stroke_intersections()
+
+
+def relative_number_of_inter_stroke_intersections(sample_wrapper):
+    """
+    Returns relative number of inter-stroke intersections.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :return: relative number of inter-stroke intersections
+    :rtype: float
+    """
+    return IntersectionUtils(sample_wrapper).get_relative_number_of_inter_stroke_intersections()

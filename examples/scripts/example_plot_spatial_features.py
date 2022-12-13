@@ -28,6 +28,15 @@ if __name__ == "__main__":
     # 1. stroke_length
     # 2. stroke_height
     # 3. stroke_width
+    # 4. writing length
+    # 5. writing height
+    # 6. writing width
+    # 7. number of intra-stroke intersections
+    # 8. relative number of intra-stroke intersections
+    # 9. total number of intra-stroke intersections
+    # 10. relative total number of intra-stroke intersections
+    # 11. number of inter-stroke intersections
+    # 12. relative number of inter-stroke intersections
 
     # Instantiate the handwriting features object from an example signal
     feature_sample = HandwritingFeatures.from_svc(os.path.join(data_path, subject_group, signal_name), variables)

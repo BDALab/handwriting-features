@@ -29,6 +29,9 @@ if __name__ == "__main__":
     # 2. ratio_of_stroke_durations
     # 3. writing_duration
     # 4. ratio_of_writing_durations
+    # 5. ratio of writing durations (on-surface / in-air writing)
+    # 6. number of interruptions
+    # 7. number of interruptions relative
 
     # Instantiate the handwriting features object from an example signal
     feature_sample = HandwritingFeatures.from_svc(os.path.join(data_path, subject_group, signal_name), variables)

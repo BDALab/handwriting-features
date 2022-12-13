@@ -50,6 +50,12 @@ The following list of handwriting features is supported:
    4. writing length
    5. writing height
    6. writing width
+   7. number of intra-stroke intersections
+   8. relative number of intra-stroke intersections
+   9. total number of intra-stroke intersections
+   10. relative total number of intra-stroke intersections
+   11. number of inter-stroke intersections
+   12. relative number of inter-stroke intersections
 4. temporal features
    1. stroke duration
    2. ratio of stroke durations (on-surface / in-air strokes)
@@ -92,6 +98,12 @@ After the `HandwritingFeatures` object is instantiated, the supported handwritin
    4. `writing_length`
    5. `writing_height`
    6. `writing_width`
+   7. `number_of_intra_stroke_intersections`
+   8. `relative_number_of_intra_stroke_intersections`
+   9. `total_number_of_intra_stroke_intersections`
+   10. `relative_total_number_of_intra_stroke_intersections`
+   11. `number_of_inter_stroke_intersections`
+   12. `relative_number_of_inter_stroke_intersections`
 4. temporal features
    1. `stroke_duration`
    2. `ratio_of_stroke_durations`
@@ -164,6 +176,12 @@ fs = 133
 #    d) writing length
 #    e) writing height
 #    f) writing width
+#    g) number of intra-stroke intersections
+#    h) relative number of intra-stroke intersections
+#    i) total number of intra-stroke intersections
+#    j) relative total number of intra-stroke intersections
+#    k) number of inter-stroke intersections
+#    l) relative number of inter-stroke intersections
 # 4. Temporal features
 #    a) stroke duration
 #    b) ratio of stroke durations (on-surface / in-air strokes)
@@ -191,12 +209,14 @@ feature_data.pressure(statistics=())
 feature_data.stroke_length(in_air=False, statistics=["quartile_1", "quartile_3"])
 feature_data.stroke_height(in_air=True, statistics=["slope_of_linear_regression"])
 feature_data.stroke_width(in_air=False, statistics=())
+# ...
 
 # 4. Temporal features
 feature_data.stroke_duration(in_air=False, statistics=["percentile_5", "percentile_95"])
 feature_data.ratio_of_stroke_durations(statistics=())
 feature_data.writing_duration(in_air=True)
 feature_data.ratio_of_writing_durations()
+# ...
 
 # 5. Composite features
 feature_data.writing_tempo(in_air=False)
@@ -256,6 +276,12 @@ fs = 133
 #    d) writing length
 #    e) writing height
 #    f) writing width
+#    g) number of intra-stroke intersections
+#    h) relative number of intra-stroke intersections
+#    i) total number of intra-stroke intersections
+#    j) relative total number of intra-stroke intersections
+#    k) number of inter-stroke intersections
+#    l) relative number of inter-stroke intersections
 # 4. Temporal features
 #    a) stroke duration
 #    b) ratio of stroke durations (on-surface / in-air strokes)
@@ -288,12 +314,14 @@ feature = feature_data.velocity(axis=axis, in_air=in_air, statistics=statistics)
 # feature = feature_data.stroke_length(in_air=in_air, statistics=statistics)
 # feature = feature_data.stroke_height(in_air=in_air, statistics=statistics)
 # feature = feature_data.stroke_width(in_air=in_air, statistics=statistics)
+# ...
 
 # 4. Compute the temporal features
 # feature = feature_data.stroke_duration(in_air=in_air, statistics=statistics)
 # feature = feature_data.ratio_of_stroke_durations(statistics=statistics)
 # feature = feature_data.writing_duration(in_air=in_air)
 # feature = feature_data.ratio_of_writing_durations()
+# ...
 
 # 5. Compute the composite features
 # feature_data.writing_tempo(in_air=False)

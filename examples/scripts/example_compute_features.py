@@ -44,6 +44,13 @@ if __name__ == "__main__":
     #    d) writing length
     #    e) writing height
     #    f) writing width
+    #    g) number of intra-stroke intersections
+    #    h) relative number of intra-stroke intersections
+    #    i) total number of intra-stroke intersections
+    #    j) relative total number of intra-stroke intersections
+    #    k) number of inter-stroke intersections
+    #    l) relative number of inter-stroke intersections
+
     # 4. Temporal features
     #    a) stroke duration
     #    b) ratio of stroke durations (on-surface / in-air strokes)
@@ -71,12 +78,14 @@ if __name__ == "__main__":
     feature_sample.stroke_length(in_air=False, statistics=["quartile_1", "quartile_3"])
     feature_sample.stroke_height(in_air=True, statistics=["slope_of_linear_regression"])
     feature_sample.stroke_width(in_air=False, statistics=())
+    # ...
 
     # 4. Temporal features
     feature_sample.stroke_duration(in_air=False, statistics=["percentile_5", "percentile_95"])
     feature_sample.ratio_of_stroke_durations(statistics=())
     feature_sample.writing_duration(in_air=True)
     feature_sample.ratio_of_writing_durations()
+    # ...
 
     # 5. Composite features
     feature_sample.writing_tempo(in_air=False)

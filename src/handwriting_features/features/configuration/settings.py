@@ -260,6 +260,66 @@ class HandwritingFeaturesSettings(object):
             }
         },
 
+        # Number of intra-stroke intersections
+        "number_of_intra_stroke_intersections": {
+            "properties": {
+                "is_multi_valued": True
+            },
+            "arguments": {
+                "statistics": {
+                    "mandatory": False,
+                    "type": [str, list, tuple],
+                    "options": statistics
+                }
+            }
+        },
+
+        # Relative number of intra-stroke intersections
+        "relative_number_of_intra_stroke_intersections": {
+            "properties": {
+                "is_multi_valued": True
+            },
+            "arguments": {
+                "statistics": {
+                    "mandatory": False,
+                    "type": [str, list, tuple],
+                    "options": statistics
+                }
+            }
+        },
+
+        # Total number of intra-stroke intersections
+        "total_number_of_intra_stroke_intersections": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {}
+        },
+
+        # Relative total number of intra-stroke intersections
+        "relative_total_number_of_intra_stroke_intersections": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {}
+        },
+
+        # Number of inter-stroke intersections
+        "number_of_inter_stroke_intersections": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {}
+        },
+
+        # Relative number of inter-stroke intersections
+        "relative_number_of_inter_stroke_intersections": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {}
+        },
+
         # --------------------
         # 4. Temporal features
 
