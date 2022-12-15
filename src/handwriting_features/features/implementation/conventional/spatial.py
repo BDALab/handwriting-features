@@ -1,6 +1,6 @@
 import numpy
 from handwriting_features.data.utils.math import derivation
-from handwriting_features.features.implementation.conventional.utils.spatial import IntersectionUtils
+from handwriting_features.features.implementation.conventional.utils.spatial import IntersectionUtils, ProjectionUtils
 
 
 def stroke_length(sample_wrapper, in_air):
@@ -227,3 +227,163 @@ def relative_number_of_inter_stroke_intersections(sample_wrapper):
     :rtype: float
     """
     return IntersectionUtils(sample_wrapper).get_relative_number_of_inter_stroke_intersections()
+
+
+def vertical_peaks_indices(sample_wrapper, fs, n=None):
+    """
+    Returns vertical peaks indices.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :param fs: sampling frequency
+    :type fs: float
+    :param n: number of samples of a Gaussian filter, defaults to None
+    :type n: int, optional
+    :return: vertical peaks indices
+    :rtype: numpy.ndarray or np.NaN
+    """
+    return ProjectionUtils(sample_wrapper, fs=fs, n=n).vertical_peaks_indices()
+
+
+def vertical_valleys_indices(sample_wrapper, fs, n=None):
+    """
+    Returns vertical valleys indices.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :param fs: sampling frequency
+    :type fs: float
+    :param n: number of samples of a Gaussian filter, defaults to None
+    :type n: int, optional
+    :return: vertical valleys indices
+    :rtype: numpy.ndarray or np.NaN
+    """
+    return ProjectionUtils(sample_wrapper, fs=fs, n=n).vertical_valleys_indices()
+
+
+def vertical_peaks_values(sample_wrapper, fs, n=None):
+    """
+    Returns vertical peaks values.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :param fs: sampling frequency
+    :type fs: float
+    :param n: number of samples of a Gaussian filter, defaults to None
+    :type n: int, optional
+    :return: vertical peaks values
+    :rtype: numpy.ndarray or np.NaN
+    """
+    return ProjectionUtils(sample_wrapper, fs=fs, n=n).vertical_peaks_values()
+
+
+def vertical_valleys_values(sample_wrapper, fs, n=None):
+    """
+    Returns vertical valleys values.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :param fs: sampling frequency
+    :type fs: float
+    :param n: number of samples of a Gaussian filter, defaults to None
+    :type n: int, optional
+    :return: vertical valleys values
+    :rtype: numpy.ndarray or np.NaN
+    """
+    return ProjectionUtils(sample_wrapper, fs=fs, n=n).vertical_valleys_values()
+
+
+def vertical_peaks_velocity(sample_wrapper, fs, n=None):
+    """
+    Returns vertical peaks velocity.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :param fs: sampling frequency
+    :type fs: float
+    :param n: number of samples of a Gaussian filter, defaults to None
+    :type n: int, optional
+    :return: vertical peaks velocity
+    :rtype: numpy.ndarray or np.NaN
+    """
+    return ProjectionUtils(sample_wrapper, fs=fs, n=n).vertical_peaks_velocity()
+
+
+def vertical_valleys_velocity(sample_wrapper, fs, n=None):
+    """
+    Returns vertical valleys velocity.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :param fs: sampling frequency
+    :type fs: float
+    :param n: number of samples of a Gaussian filter, defaults to None
+    :type n: int, optional
+    :return: vertical valleys velocity
+    :rtype: numpy.ndarray or np.NaN
+    """
+    return ProjectionUtils(sample_wrapper, fs=fs, n=n).vertical_valleys_velocity()
+
+
+def vertical_peaks_distance(sample_wrapper, fs, n=None):
+    """
+    Returns vertical peaks distance.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :param fs: sampling frequency
+    :type fs: float
+    :param n: number of samples of a Gaussian filter, defaults to None
+    :type n: int, optional
+    :return: vertical peaks distance
+    :rtype: int
+    """
+    return ProjectionUtils(sample_wrapper, fs=fs, n=n).vertical_peaks_distance()
+
+
+def vertical_valleys_distance(sample_wrapper, fs, n=None):
+    """
+    Returns vertical valleys distance.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :param fs: sampling frequency
+    :type fs: float
+    :param n: number of samples of a Gaussian filter, defaults to None
+    :type n: int, optional
+    :return: vertical valleys distance
+    :rtype: int
+    """
+    return ProjectionUtils(sample_wrapper, fs=fs, n=n).vertical_valleys_distance()
+
+
+def vertical_peaks_duration(sample_wrapper, fs, n=None):
+    """
+    Returns vertical peaks duration.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :param fs: sampling frequency
+    :type fs: float
+    :param n: number of samples of a Gaussian filter, defaults to None
+    :type n: int, optional
+    :return: vertical peaks duration
+    :rtype:
+    """
+    return ProjectionUtils(sample_wrapper, fs=fs, n=n).vertical_peaks_duration()
+
+
+def vertical_valleys_duration(sample_wrapper, fs, n=None):
+    """
+    Returns vertical valleys duration.
+
+    :param sample_wrapper: sample wrapper object
+    :type sample_wrapper: HandwritingSampleWrapper
+    :param fs: sampling frequency
+    :type fs: float
+    :param n: number of samples of a Gaussian filter, defaults to None
+    :type n: int, optional
+    :return: vertical valleys duration
+    :rtype:
+    """
+    return ProjectionUtils(sample_wrapper, fs=fs, n=n).vertical_valleys_duration()

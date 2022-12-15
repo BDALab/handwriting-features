@@ -320,6 +320,186 @@ class HandwritingFeaturesSettings(object):
             "arguments": {}
         },
 
+        # Vertical peaks indices
+        "vertical_peaks_indices": {
+            "properties": {
+                "is_multi_valued": True
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                },
+                "statistics": {
+                    "mandatory": False,
+                    "type": [str, list, tuple],
+                    "options": statistics
+                }
+            }
+        },
+
+        # Vertical valleys indices
+        "vertical_valleys_indices": {
+            "properties": {
+                "is_multi_valued": True
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                },
+                "statistics": {
+                    "mandatory": False,
+                    "type": [str, list, tuple],
+                    "options": statistics
+                }
+            }
+        },
+
+        # Vertical peaks values
+        "vertical_peaks_values": {
+            "properties": {
+                "is_multi_valued": True
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                },
+                "statistics": {
+                    "mandatory": False,
+                    "type": [str, list, tuple],
+                    "options": statistics
+                }
+            }
+        },
+
+        # Vertical valleys values
+        "vertical_valleys_values": {
+            "properties": {
+                "is_multi_valued": True
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                },
+                "statistics": {
+                    "mandatory": False,
+                    "type": [str, list, tuple],
+                    "options": statistics
+                }
+            }
+        },
+
+        # Vertical peaks velocity
+        "vertical_peaks_velocity": {
+            "properties": {
+                "is_multi_valued": True
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                },
+                "statistics": {
+                    "mandatory": False,
+                    "type": [str, list, tuple],
+                    "options": statistics
+                }
+            }
+        },
+
+        # Vertical valleys velocity
+        "vertical_valleys_velocity": {
+            "properties": {
+                "is_multi_valued": True
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                },
+                "statistics": {
+                    "mandatory": False,
+                    "type": [str, list, tuple],
+                    "options": statistics
+                }
+            }
+        },
+
+        # Vertical peaks distance
+        "vertical_peaks_distance": {
+            "properties": {
+                "is_multi_valued": True
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                },
+                "statistics": {
+                    "mandatory": False,
+                    "type": [str, list, tuple],
+                    "options": statistics
+                }
+            }
+        },
+
+        # Vertical valleys distance
+        "vertical_valleys_distance": {
+            "properties": {
+                "is_multi_valued": True
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                },
+                "statistics": {
+                    "mandatory": False,
+                    "type": [str, list, tuple],
+                    "options": statistics
+                }
+            }
+        },
+
+        # Vertical peaks duration
+        "vertical_peaks_duration": {
+            "properties": {
+                "is_multi_valued": True
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                },
+                "statistics": {
+                    "mandatory": False,
+                    "type": [str, list, tuple],
+                    "options": statistics
+                }
+            }
+        },
+
+        # Vertical valleys duration
+        "vertical_valleys_duration": {
+            "properties": {
+                "is_multi_valued": True
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                },
+                "statistics": {
+                    "mandatory": False,
+                    "type": [str, list, tuple],
+                    "options": statistics
+                }
+            }
+        },
+
         # --------------------
         # 4. Temporal features
 

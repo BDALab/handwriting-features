@@ -60,3 +60,26 @@ class GaussianFilter(object):
     def filter(self, signal):
         """Filters an input signal by a Gaussian filter"""
         return self._custom_gaussian_filter(signal, self.n)
+
+
+def segment(signal, window_size, window_step):
+    """Segments an input signal"""
+
+    if window_size % 2 != 0:
+        raise ValueError("Window size must be even")
+
+    # Make sure there are an even number of windows before stride is applied
+    x_padded = np.hstack((signal, np.zeros((window_size - len(signal) % window_size))))
+
+    # Get the number of windows to use
+    num_windows = (len(x_padded) - window_size) // window_step
+
+    # Prepare the segmented signal
+    segmented = np.ndarray((num_windows, window_size), dtype=x_padded.dtype)
+
+    # Segment the input signal
+    for i in np.arange(num_windows):
+        segmented[i] = x_padded[(i * window_step):(i * window_step + window_size)]
+
+    # Return the segmented signal
+    return segmented

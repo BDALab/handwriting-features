@@ -55,6 +55,26 @@ class HandwritingFeaturesMapping(object):
                 self.features.number_of_inter_stroke_intersections,
             "relative_number_of_inter_stroke_intersections":
                 self.features.relative_number_of_inter_stroke_intersections,
+            "vertical_peaks_indices":
+                self.features.vertical_peaks_indices,
+            "vertical_valleys_indices":
+                self.features.vertical_valleys_indices,
+            "vertical_peaks_values":
+                self.features.vertical_peaks_values,
+            "vertical_valleys_values":
+                self.features.vertical_valleys_values,
+            "vertical_peaks_velocity":
+                self.features.vertical_peaks_velocity,
+            "vertical_valleys_velocity":
+                self.features.vertical_valleys_velocity,
+            "vertical_peaks_distance":
+                self.features.vertical_peaks_distance,
+            "vertical_valleys_distance":
+                self.features.vertical_valleys_distance,
+            "vertical_peaks_duration":
+                self.features.vertical_peaks_duration,
+            "vertical_valleys_duration":
+                self.features.vertical_valleys_duration,
 
             # 4. Temporal features
             "stroke_duration":

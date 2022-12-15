@@ -230,6 +230,156 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         """
         return self.compute(self.wrapper, relative_number_of_inter_stroke_intersections)
 
+    def vertical_peaks_indices(self, fs, n=None, statistics=()):
+        """
+        Extracts the vertical peaks indices.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :param statistics: statistics to compute, defaults to ()
+        :type statistics: Any[list, tuple], optional
+        :return: vertical peaks indices
+        :rtype: numpy.ndarray or np.NaN
+        """
+        return self.compute(self.wrapper, vertical_peaks_indices, fs=fs, n=n, statistics=statistics)
+
+    def vertical_valleys_indices(self, fs, n=None, statistics=()):
+        """
+        Extracts the vertical valleys indices.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :param statistics: statistics to compute, defaults to ()
+        :type statistics: Any[list, tuple], optional
+        :return: vertical valleys indices
+        :rtype: numpy.ndarray or np.NaN
+        """
+        return self.compute(self.wrapper, vertical_valleys_indices, fs=fs, n=n, statistics=statistics)
+
+    def vertical_peaks_values(self, fs, n=None, statistics=()):
+        """
+        Extracts the vertical peaks values.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :param statistics: statistics to compute, defaults to ()
+        :type statistics: Any[list, tuple], optional
+        :return: vertical peaks values
+        :rtype: numpy.ndarray or np.NaN
+        """
+        return self.compute(self.wrapper, vertical_peaks_values, fs=fs, n=n, statistics=statistics)
+
+    def vertical_valleys_values(self, fs, n=None, statistics=()):
+        """
+        Extracts the vertical valleys values.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :param statistics: statistics to compute, defaults to ()
+        :type statistics: Any[list, tuple], optional
+        :return: vertical valleys values
+        :rtype: numpy.ndarray or np.NaN
+        """
+        return self.compute(self.wrapper, vertical_valleys_values, fs=fs, n=n, statistics=statistics)
+
+    def vertical_peaks_velocity(self, fs, n=None, statistics=()):
+        """
+        Extracts the vertical peaks velocity.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :param statistics: statistics to compute, defaults to ()
+        :type statistics: Any[list, tuple], optional
+        :return: vertical peaks velocity
+        :rtype: numpy.ndarray or np.NaN
+        """
+        return self.compute(self.wrapper, vertical_peaks_velocity, fs=fs, n=n, statistics=statistics)
+
+    def vertical_valleys_velocity(self, fs, n=None, statistics=()):
+        """
+        Extracts the vertical valleys velocity.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :param statistics: statistics to compute, defaults to ()
+        :type statistics: Any[list, tuple], optional
+        :return: vertical valleys velocity
+        :rtype: numpy.ndarray or np.NaN
+        """
+        return self.compute(self.wrapper, vertical_valleys_velocity, fs=fs, n=n, statistics=statistics)
+
+    def vertical_peaks_distance(self, fs, n=None, statistics=()):
+        """
+        Extracts the vertical peaks distance.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :param statistics: statistics to compute, defaults to ()
+        :type statistics: Any[list, tuple], optional
+        :return: vertical peaks distance
+        :rtype: numpy.ndarray or np.NaN
+        """
+        return self.compute(self.wrapper, vertical_peaks_distance, fs=fs, n=n, statistics=statistics)
+
+    def vertical_valleys_distance(self, fs, n=None, statistics=()):
+        """
+        Extracts the vertical valleys distance.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :param statistics: statistics to compute, defaults to ()
+        :type statistics: Any[list, tuple], optional
+        :return: vertical valleys distance
+        :rtype: numpy.ndarray or np.NaN
+        """
+        return self.compute(self.wrapper, vertical_valleys_distance, fs=fs, n=n, statistics=statistics)
+
+    def vertical_peaks_duration(self, fs, n=None, statistics=()):
+        """
+        Extracts the vertical peaks duration.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :param statistics: statistics to compute, defaults to ()
+        :type statistics: Any[list, tuple], optional
+        :return: vertical peaks duration
+        :rtype: numpy.ndarray or np.NaN
+        """
+        return self.compute(self.wrapper, vertical_peaks_duration, fs=fs, n=n, statistics=statistics)
+
+    def vertical_valleys_duration(self, fs, n=None, statistics=()):
+        """
+        Extracts the vertical valleys duration.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :param statistics: statistics to compute, defaults to ()
+        :type statistics: Any[list, tuple], optional
+        :return: vertical valleys duration
+        :rtype: numpy.ndarray or np.NaN
+        """
+        return self.compute(self.wrapper, vertical_valleys_duration, fs=fs, n=n, statistics=statistics)
+
     # --------------------
     # 4. Temporal features
 
@@ -338,7 +488,7 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :param fc: cutoff frequency for the low-pass filter, defaults to None
         :type fc: float, optional
         :param n: number of samples of a Gaussian filter, defaults to None
-        :type n: int
+        :type n: int, optional
         :return: number of writing changes
         :rtype: numpy.ndarray or np.NaN
         """
