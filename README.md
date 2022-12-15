@@ -56,6 +56,16 @@ The following list of handwriting features is supported:
    10. relative total number of intra-stroke intersections
    11. number of inter-stroke intersections
    12. relative number of inter-stroke intersections
+   13. vertical peaks indices
+   14. vertical valleys indices
+   15. vertical peaks values
+   16. vertical valleys values
+   17. vertical peaks velocity
+   18. vertical valleys velocity
+   19. vertical peaks distance
+   20. vertical valleys distance
+   21. vertical peaks duration
+   22. vertical valleys duration
 4. temporal features
    1. stroke duration
    2. ratio of stroke durations (on-surface / in-air strokes)
@@ -104,6 +114,16 @@ After the `HandwritingFeatures` object is instantiated, the supported handwritin
    10. `relative_total_number_of_intra_stroke_intersections`
    11. `number_of_inter_stroke_intersections`
    12. `relative_number_of_inter_stroke_intersections`
+   13. `vertical_peaks_indices`
+   14. `vertical_valleys_indices`
+   15. `vertical_peaks_values`
+   16. `vertical_valleys_values`
+   17. `vertical_peaks_velocity`
+   18. `vertical_valleys_velocity`
+   19. `vertical_peaks_distance`
+   20. `vertical_valleys_distance`
+   21. `vertical_peaks_duration`
+   22. `vertical_valleys_duration`
 4. temporal features
    1. `stroke_duration`
    2. `ratio_of_stroke_durations`
@@ -182,6 +202,16 @@ fs = 133
 #    j) relative total number of intra-stroke intersections
 #    k) number of inter-stroke intersections
 #    l) relative number of inter-stroke intersections
+#    m) vertical peaks indices
+#    n) vertical valleys indices
+#    o) vertical peaks values
+#    p) vertical valleys values
+#    q) vertical peaks velocity
+#    r) vertical valleys velocity
+#    s) vertical peaks distance
+#    t) vertical valleys distance
+#    u) vertical peaks duration
+#    v) vertical valleys duration
 # 4. Temporal features
 #    a) stroke duration
 #    b) ratio of stroke durations (on-surface / in-air strokes)
@@ -282,6 +312,16 @@ fs = 133
 #    j) relative total number of intra-stroke intersections
 #    k) number of inter-stroke intersections
 #    l) relative number of inter-stroke intersections
+#    m) vertical peaks indices
+#    n) vertical valleys indices
+#    o) vertical peaks values
+#    p) vertical valleys values
+#    q) vertical peaks velocity
+#    r) vertical valleys velocity
+#    s) vertical peaks distance
+#    t) vertical valleys distance
+#    u) vertical peaks duration
+#    v) vertical valleys duration
 # 4. Temporal features
 #    a) stroke duration
 #    b) ratio of stroke durations (on-surface / in-air strokes)

@@ -37,6 +37,16 @@ if __name__ == "__main__":
     # 10. relative total number of intra-stroke intersections
     # 11. number of inter-stroke intersections
     # 12. relative number of inter-stroke intersections
+    # 13. vertical peaks indices
+    # 14. vertical valleys indices
+    # 15. vertical peaks values
+    # 16. vertical valleys values
+    # 17. vertical peaks velocity
+    # 18. vertical valleys velocity
+    # 19. vertical peaks distance
+    # 20. vertical valleys distance
+    # 21. vertical peaks duration
+    # 22. vertical valleys duration
 
     # Instantiate the handwriting features object from an example signal
     feature_sample = HandwritingFeatures.from_svc(os.path.join(data_path, subject_group, signal_name), variables)

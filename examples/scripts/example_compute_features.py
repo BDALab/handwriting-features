@@ -50,7 +50,16 @@ if __name__ == "__main__":
     #    j) relative total number of intra-stroke intersections
     #    k) number of inter-stroke intersections
     #    l) relative number of inter-stroke intersections
-
+    #    m) vertical peaks indices
+    #    n) vertical valleys indices
+    #    o) vertical peaks values
+    #    p) vertical valleys values
+    #    q) vertical peaks velocity
+    #    r) vertical valleys velocity
+    #    s) vertical peaks distance
+    #    t) vertical valleys distance
+    #    u) vertical peaks duration
+    #    v) vertical valleys duration
     # 4. Temporal features
     #    a) stroke duration
     #    b) ratio of stroke durations (on-surface / in-air strokes)
