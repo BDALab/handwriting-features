@@ -22,8 +22,8 @@ copyright = '2022, BDALab'
 author = 'BDALab'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.2'
-version = '1.0.2'
+release = '0.0.3'
+version = '1.0.3'
 
 
 # -- General configuration ---------------------------------------------------
