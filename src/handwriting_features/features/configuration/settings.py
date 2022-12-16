@@ -616,25 +616,153 @@ class HandwritingFeaturesSettings(object):
             }
         },
 
-        # Writing number of changes
-        "writing_number_of_changes": {
+        # Number of changes in x profile
+        "number_of_changes_in_x_profile": {
             "properties": {
-                "is_multi_valued": False,
-                "is_composite": True,
-                "composite_feature_names": [
-                    "number_of_changes_in_x_profile",
-                    "number_of_changes_in_y_profile",
-                    "number_of_changes_in_azimuth",
-                    "number_of_changes_in_tilt",
-                    "number_of_changes_in_pressure",
-                    "number_of_changes_in_velocity",
-                    "relative_number_of_changes_in_x_profile",
-                    "relative_number_of_changes_in_y_profile",
-                    "relative_number_of_changes_in_azimuth",
-                    "relative_number_of_changes_in_tilt",
-                    "relative_number_of_changes_in_pressure",
-                    "relative_number_of_changes_in_velocity"
-                ]
+                "is_multi_valued": False
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                }
+            }
+        },
+
+        # Number of changes in y profile
+        "number_of_changes_in_y_profile": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                }
+            }
+        },
+
+        # Number of changes in azimuth
+        "number_of_changes_in_azimuth": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                }
+            }
+        },
+
+        # Number of changes in tilt
+        "number_of_changes_in_tilt": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                }
+            }
+        },
+
+        # Number of changes in pressure
+        "number_of_changes_in_pressure": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                }
+            }
+        },
+
+        # Number of changes in velocity profile
+        "number_of_changes_in_velocity_profile": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                }
+            }
+        },
+
+        # Relative number of changes in x profile
+        "relative_number_of_changes_in_x_profile": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                }
+            }
+        },
+
+        # Relative number of changes in y profile
+        "relative_number_of_changes_in_y_profile": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                }
+            }
+        },
+
+        # Relative number of changes in azimuth
+        "relative_number_of_changes_in_azimuth": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                }
+            }
+        },
+
+        # Relative number of changes in tilt
+        "relative_number_of_changes_in_tilt": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                }
+            }
+        },
+
+        # Relative number of changes in pressure
+        "relative_number_of_changes_in_pressure": {
+            "properties": {
+                "is_multi_valued": False
+            },
+            "arguments": {
+                "fs": {
+                    "mandatory": True,
+                    "type": [int, float]
+                }
+            }
+        },
+
+        # Relative number of changes in velocity profile
+        "relative_number_of_changes_in_velocity_profile": {
+            "properties": {
+                "is_multi_valued": False
             },
             "arguments": {
                 "fs": {

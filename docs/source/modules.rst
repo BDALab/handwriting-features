@@ -1,5 +1,5 @@
-src
-===
+handwriting_features
+====================
 
 .. toctree::
    :maxdepth: 4

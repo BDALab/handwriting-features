@@ -71,7 +71,18 @@ if __name__ == "__main__":
     # 5. Composite features
     #    a) writing tempo
     #    b) writing stops
-    #    c) writing number of changes
+    #    c) number of changes in x profile
+    #    d) number of changes in y profile
+    #    e) number of changes in azimuth
+    #    f) number of changes in tilt
+    #    g) number of changes in pressure
+    #    h) number of changes in velocity profile
+    #    i) relative number of changes in x profile
+    #    j) relative number of changes in y profile
+    #    k) relative number of changes in azimuth
+    #    l) relative number of changes in tilt
+    #    m) relative number of changes in pressure
+    #    n) relative number of changes in velocity profile
 
     # 1. Kinematic features
     feature_sample.velocity(axis="x", in_air=False, statistics=["mean", "std"])
@@ -99,4 +110,4 @@ if __name__ == "__main__":
     # 5. Composite features
     feature_sample.writing_tempo(in_air=False)
     feature_sample.writing_stops(statistics=["mean", "std"])
-    feature_sample.writing_number_of_changes(in_air=True, fs=fs)
+    # ...

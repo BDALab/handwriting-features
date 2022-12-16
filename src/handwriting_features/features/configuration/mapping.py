@@ -97,8 +97,30 @@ class HandwritingFeaturesMapping(object):
                 self.features.writing_tempo,
             "writing_stops":
                 self.features.writing_stops,
-            "writing_number_of_changes":
-                self.features.writing_number_of_changes
+            "number_of_changes_in_x_profile":
+                self.features.number_of_changes_in_x_profile,
+            "number_of_changes_in_y_profile":
+                self.features.number_of_changes_in_y_profile,
+            "number_of_changes_in_azimuth":
+                self.features.number_of_changes_in_azimuth,
+            "number_of_changes_in_tilt":
+                self.features.number_of_changes_in_tilt,
+            "number_of_changes_in_pressure":
+                self.features.number_of_changes_in_pressure,
+            "number_of_changes_in_velocity_profile":
+                self.features.number_of_changes_in_velocity_profile,
+            "relative_number_of_changes_in_x_profile":
+                self.features.relative_number_of_changes_in_x_profile,
+            "relative_number_of_changes_in_y_profile":
+                self.features.relative_number_of_changes_in_y_profile,
+            "relative_number_of_changes_in_azimuth":
+                self.features.relative_number_of_changes_in_azimuth,
+            "relative_number_of_changes_in_tilt":
+                self.features.relative_number_of_changes_in_tilt,
+            "relative_number_of_changes_in_pressure":
+                self.features.relative_number_of_changes_in_pressure,
+            "relative_number_of_changes_in_velocity_profile":
+                self.features.relative_number_of_changes_in_velocity_profile,
         }
 
         # Map the feature name to the feature computation method

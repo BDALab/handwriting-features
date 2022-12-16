@@ -479,9 +479,9 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         """
         return self.compute(self.wrapper, writing_stops, statistics=statistics)
 
-    def writing_number_of_changes(self, fs, fc=None, n=None):
+    def number_of_changes_in_x_profile(self, fs, fc=None, n=None):
         """
-        Extracts the number of writing changes.
+        Extracts the number of changes in x profile.
 
         :param fs: sampling frequency
         :type fs: float
@@ -489,7 +489,172 @@ class HandwritingFeatures(HandwritingFeaturesBase):
         :type fc: float, optional
         :param n: number of samples of a Gaussian filter, defaults to None
         :type n: int, optional
-        :return: number of writing changes
-        :rtype: numpy.ndarray or np.NaN
+        :return: number of changes in x profile
+        :rtype: int
         """
-        return self.compute(self.wrapper, writing_number_of_changes, fs=fs, fc=fc, n=n)
+        return self.compute(self.wrapper, number_of_changes_in_x_profile, fs=fs, fc=fc, n=n)
+
+    def number_of_changes_in_y_profile(self, fs, fc=None, n=None):
+        """
+        Extracts the number of changes in y profile.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param fc: cutoff frequency for the low-pass filter, defaults to None
+        :type fc: float, optional
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :return: number of changes in y profile
+        :rtype: int
+        """
+        return self.compute(self.wrapper, number_of_changes_in_y_profile, fs=fs, fc=fc, n=n)
+
+    def number_of_changes_in_azimuth(self, fs, fc=None, n=None):
+        """
+        Extracts the number of changes in azimuth.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param fc: cutoff frequency for the low-pass filter, defaults to None
+        :type fc: float, optional
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :return: number of changes in azimuth
+        :rtype: int
+        """
+        return self.compute(self.wrapper, number_of_changes_in_azimuth, fs=fs, fc=fc, n=n)
+
+    def number_of_changes_in_tilt(self, fs, fc=None, n=None):
+        """
+        Extracts the number of changes in tilt.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param fc: cutoff frequency for the low-pass filter, defaults to None
+        :type fc: float, optional
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :return: number of changes in tilt
+        :rtype: int
+        """
+        return self.compute(self.wrapper, number_of_changes_in_tilt, fs=fs, fc=fc, n=n)
+
+    def number_of_changes_in_pressure(self, fs, fc=None, n=None):
+        """
+        Extracts the number of changes in pressure.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param fc: cutoff frequency for the low-pass filter, defaults to None
+        :type fc: float, optional
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :return: number of changes in pressure
+        :rtype: int
+        """
+        return self.compute(self.wrapper, number_of_changes_in_pressure, fs=fs, fc=fc, n=n)
+
+    def number_of_changes_in_velocity_profile(self, fs, fc=None, n=None):
+        """
+        Extracts the number of changes in velocity profile.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param fc: cutoff frequency for the low-pass filter, defaults to None
+        :type fc: float, optional
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :return: number of changes in velocity profile
+        :rtype: int
+        """
+        return self.compute(self.wrapper, number_of_changes_in_velocity_profile, fs=fs, fc=fc, n=n)
+
+    def relative_number_of_changes_in_x_profile(self, fs, fc=None, n=None):
+        """
+        Extracts the relative number of changes in x profile.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param fc: cutoff frequency for the low-pass filter, defaults to None
+        :type fc: float, optional
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :return: relative number of changes in x profile
+        :rtype: int
+        """
+        return self.compute(self.wrapper, relative_number_of_changes_in_x_profile, fs=fs, fc=fc, n=n)
+
+    def relative_number_of_changes_in_y_profile(self, fs, fc=None, n=None):
+        """
+        Extracts the relative number of changes in y profile.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param fc: cutoff frequency for the low-pass filter, defaults to None
+        :type fc: float, optional
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :return: relative number of changes in y profile
+        :rtype: int
+        """
+        return self.compute(self.wrapper, relative_number_of_changes_in_y_profile, fs=fs, fc=fc, n=n)
+
+    def relative_number_of_changes_in_azimuth(self, fs, fc=None, n=None):
+        """
+        Extracts the relative number of changes in azimuth.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param fc: cutoff frequency for the low-pass filter, defaults to None
+        :type fc: float, optional
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :return: relative number of changes in azimuth
+        :rtype: int
+        """
+        return self.compute(self.wrapper, relative_number_of_changes_in_azimuth, fs=fs, fc=fc, n=n)
+
+    def relative_number_of_changes_in_tilt(self, fs, fc=None, n=None):
+        """
+        Extracts the relative number of changes in tilt.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param fc: cutoff frequency for the low-pass filter, defaults to None
+        :type fc: float, optional
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :return: relative number of changes in tilt
+        :rtype: int
+        """
+        return self.compute(self.wrapper, relative_number_of_changes_in_tilt, fs=fs, fc=fc, n=n)
+
+    def relative_number_of_changes_in_pressure(self, fs, fc=None, n=None):
+        """
+        Extracts the relative number of changes in pressure.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param fc: cutoff frequency for the low-pass filter, defaults to None
+        :type fc: float, optional
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :return: relative number of changes in pressure
+        :rtype: int
+        """
+        return self.compute(self.wrapper, relative_number_of_changes_in_pressure, fs=fs, fc=fc, n=n)
+
+    def relative_number_of_changes_in_velocity_profile(self, fs, fc=None, n=None):
+        """
+        Extracts the relative number of changes in velocity profile.
+
+        :param fs: sampling frequency
+        :type fs: float
+        :param fc: cutoff frequency for the low-pass filter, defaults to None
+        :type fc: float, optional
+        :param n: number of samples of a Gaussian filter, defaults to None
+        :type n: int, optional
+        :return: relative number of changes in velocity profile
+        :rtype: int
+        """
+        return self.compute(self.wrapper, relative_number_of_changes_in_velocity_profile, fs=fs, fc=fc, n=n)

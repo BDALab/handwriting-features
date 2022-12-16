@@ -77,7 +77,18 @@ The following list of handwriting features is supported:
 5. composite features
    1. writing tempo
    2. writing stops
-   3. writing number of changes
+   3. number of changes in x profile
+   4. number of changes in y profile
+   5. number of changes in azimuth
+   6. number of changes in tilt
+   7. number of changes in pressure
+   8. number of changes in velocity profile
+   9. relative number of changes in x profile
+   10. relative number of changes in y profile
+   11. relative number of changes in azimuth
+   12. relative number of changes in tilt
+   13. relative number of changes in pressure
+   14. relative number of changes in velocity profile
 
 ## Usage
 
@@ -135,7 +146,18 @@ After the `HandwritingFeatures` object is instantiated, the supported handwritin
 5. composite features
    1. `writing_tempo`
    2. `writing_stops`
-   3. `writing_number_of_changes`
+   3. `number_of_changes_in_x_profile`
+   4. `number_of_changes_in_y_profile`
+   5. `number_of_changes_in_azimuth`
+   6. `number_of_changes_in_tilt`
+   7. `number_of_changes_in_pressure`
+   8. `number_of_changes_in_velocity_profile`
+   9. `relative_number_of_changes_in_x_profile`
+   10. `relative_number_of_changes_in_y_profile`
+   11. `relative_number_of_changes_in_azimuth`
+   12. `relative_number_of_changes_in_tilt`
+   13. `relative_number_of_changes_in_pressure`
+   14. `relative_number_of_changes_in_velocity_profile`
 
 For more information, see the [Examples](#Examples) section.
 
@@ -223,7 +245,18 @@ fs = 133
 # 5. Composite features
 #    a) writing tempo
 #    b) writing stops
-#    c) writing number of changes
+#    c) number of changes in x profile
+#    d) number of changes in y profile
+#    e) number of changes in azimuth
+#    f) number of changes in tilt
+#    g) number of changes in pressure
+#    h) number of changes in velocity profile
+#    i) relative number of changes in x profile
+#    j) relative number of changes in y profile
+#    k) relative number of changes in azimuth
+#    l) relative number of changes in tilt
+#    m) relative number of changes in pressure
+#    n) relative number of changes in velocity profile
 
 # 1. Kinematic features
 feature_data.velocity(axis="x", in_air=False, statistics=["mean", "std"])
@@ -251,7 +284,7 @@ feature_data.ratio_of_writing_durations()
 # 5. Composite features
 feature_data.writing_tempo(in_air=False)
 feature_data.writing_stops(statistics=["mean", "std"])
-feature_data.writing_number_of_changes(in_air=True, fs=fs)
+# ...
 ```
 
 ### 2. plot handwriting features
@@ -333,7 +366,18 @@ fs = 133
 # 5. Composite features
 #    a) writing tempo
 #    b) writing stops
-#    c) writing number of changes
+#    c) number of changes in x profile
+#    d) number of changes in y profile
+#    e) number of changes in azimuth
+#    f) number of changes in tilt
+#    g) number of changes in pressure
+#    h) number of changes in velocity profile
+#    i) relative number of changes in x profile
+#    j) relative number of changes in y profile
+#    k) relative number of changes in azimuth
+#    l) relative number of changes in tilt
+#    m) relative number of changes in pressure
+#    n) relative number of changes in velocity profile
 
 # Prepare the features computation
 axis = "x"
@@ -366,7 +410,7 @@ feature = feature_data.velocity(axis=axis, in_air=in_air, statistics=statistics)
 # 5. Compute the composite features
 # feature_data.writing_tempo(in_air=False)
 # feature_data.writing_stops(statistics=["mean", "std"])
-# feature_data.writing_number_of_changes(in_air=True, fs=fs)
+# ...
 
 pprint(feature)
 

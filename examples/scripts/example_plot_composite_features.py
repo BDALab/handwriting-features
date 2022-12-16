@@ -27,7 +27,18 @@ if __name__ == "__main__":
     #
     # 1. writing tempo
     # 2. writing stops
-    # 3. writing number of changes
+    # 3. number of changes in x profile
+    # 4. number of changes in y profile
+    # 5. number of changes in azimuth
+    # 6. number of changes in tilt
+    # 7. number of changes in pressure
+    # 8. number of changes in velocity profile
+    # 9. relative number of changes in x profile
+    # 10. relative number of changes in y profile
+    # 11. relative number of changes in azimuth
+    # 12. relative number of changes in tilt
+    # 13. relative number of changes in pressure
+    # 14. relative number of changes in velocity profile
 
     # Instantiate the handwriting features object from an example signal
     feature_sample = HandwritingFeatures.from_svc(os.path.join(data_path, subject_group, signal_name), variables)
@@ -45,7 +56,7 @@ if __name__ == "__main__":
     # Compute the composite features
     feature = feature_sample.writing_tempo(in_air=in_air)
     # feature = feature_sample.writing_stops(statistics=statistics)
-    # feature = feature_sample.writing_number_of_changes(in_air=in_air, fs=fs)
+    # ...
 
     pprint(feature)
 

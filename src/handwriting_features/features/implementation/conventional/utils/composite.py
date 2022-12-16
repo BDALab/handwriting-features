@@ -1,4 +1,5 @@
 import numpy
+import functools
 from copy import deepcopy
 from handwriting_features.data.utils.math import derivation
 from handwriting_features.data.utils.dsp import LowPassFilter, GaussianFilter
@@ -161,7 +162,7 @@ class WritingNumberOfChangesUtils(object):
     fc = 17.5
     n = 50
 
-    def __init__(self, sample_wrapper, fs, fc=None, n=None):
+    def __init__(self, sample_wrapper, fs, fc=None, n=None, subset=None):
         """
         Initializes the writing number of changes utils object.
 
@@ -170,7 +171,9 @@ class WritingNumberOfChangesUtils(object):
         :param fc: cutoff frequency for the low-pass filter, defaults to 17.5
         :type fc: float, optional
         :param n: number of samples of a Gaussian filter, defaults to 50
-        :type n: int
+        :type n: int, optional
+        :param subset: subset of composite features to return, defaults to None
+        :type subset: list, optional
         """
 
         # Set the sample wrapper
@@ -185,69 +188,90 @@ class WritingNumberOfChangesUtils(object):
         self.low_pass_filter = LowPassFilter(self.fs, self.fc)
         self.gaussian_filter = GaussianFilter(self.fs, self.n)
 
-    def get_number_of_changes(self):
-        """Extracts the number of writing changes"""
-
         # Get the duration
-        duration = self.sample_wrapper.sample_time[-1] - self.sample_wrapper.sample_time[0]
+        self.duration = self.sample_wrapper.sample_time[-1] - self.sample_wrapper.sample_time[0]
 
         # Filter x, y, azimuth, tilt, and pressure by a low-pass filter
         self.sample_wrapper.sample = self._filter_data_with_low_pass_filter(self.sample_wrapper.sample)
 
         # Get the on-surface strokes
-        strokes = self.sample_wrapper.on_surface_strokes
+        self.strokes = self.sample_wrapper.on_surface_strokes
 
-        # Prepare the output variables
-        changes_x = 0
-        changes_y = 0
-        changes_azimuth = 0
-        changes_tilt = 0
-        changes_pressure = 0
-        changes_velocity = 0
+        # Set the subset of the features to return
+        self.subset = subset
 
-        # Get the number of changes
-        for stroke in strokes:
+    @functools.lru_cache(maxsize=1)
+    def get_number_of_changes_in_x_profile(self):
+        """Gets the number of changes in x profile"""
+        return sum(self._get_changes(self._filter_data_with_gaussian_filter(s).x) for s in self.strokes)
+
+    @functools.lru_cache(maxsize=1)
+    def get_number_of_changes_in_y_profile(self):
+        """Gets the number of changes in y profile"""
+        return sum(self._get_changes(self._filter_data_with_gaussian_filter(s).y) for s in self.strokes)
+
+    @functools.lru_cache(maxsize=1)
+    def get_number_of_changes_in_azimuth(self):
+        """Gets the number of changes in azimuth"""
+        return sum(self._get_changes(self._filter_data_with_gaussian_filter(s).azimuth) for s in self.strokes)
+
+    @functools.lru_cache(maxsize=1)
+    def get_number_of_changes_in_tilt(self):
+        """Gets the number of changes in tilt"""
+        return sum(self._get_changes(self._filter_data_with_gaussian_filter(s).tilt) for s in self.strokes)
+
+    @functools.lru_cache(maxsize=1)
+    def get_number_of_changes_in_pressure(self):
+        """Gets the number of changes in pressure"""
+        return sum(self._get_changes(self._filter_data_with_gaussian_filter(s).pressure) for s in self.strokes)
+
+    @functools.lru_cache(maxsize=1)
+    def get_number_of_changes_in_velocity_profile(self):
+        """Gets the number of changes in velocity profile"""
+
+        # Prepare the number of changes
+        num_changes = 0
+
+        # Compute the number of changes
+        for stroke in self.strokes:
 
             # Compute the vector of length, time, and velocity
             length = numpy.sqrt(numpy.power(derivation(stroke.x), 2) + numpy.power(derivation(stroke.y), 2))
             time = derivation(stroke.time)
             velocity = numpy.array([d / t for (d, t) in zip(length, time)])
 
-            # Filter x, y, azimuth, tilt, pressure, and velocity by a Gaussian filter
-            stroke = self._filter_data_with_gaussian_filter(stroke)
+            # Filter the velocity by a Gaussian filter
             velocity = self._filter_velocity_with_gaussian_filter(velocity)
 
             # Compute the number of changes
-            changes_x += self._get_changes(stroke.x)
-            changes_y += self._get_changes(stroke.y)
-            changes_azimuth += self._get_changes(stroke.azimuth)
-            changes_tilt += self._get_changes(stroke.tilt)
-            changes_pressure += self._get_changes(stroke.pressure)
-            changes_velocity += self._get_changes(velocity)
-
-        # Get the relative number of changes
-        relative_changes_x = changes_x / duration
-        relative_changes_y = changes_y / duration
-        relative_changes_azimuth = changes_azimuth / duration
-        relative_changes_tilt = changes_tilt / duration
-        relative_changes_pressure = changes_pressure / duration
-        relative_changes_velocity = changes_velocity / duration
+            num_changes += self._get_changes(velocity)
 
         # Return the number of changes
-        return numpy.array([
-            changes_x,
-            changes_y,
-            changes_azimuth,
-            changes_tilt,
-            changes_pressure,
-            changes_velocity,
-            relative_changes_x,
-            relative_changes_y,
-            relative_changes_azimuth,
-            relative_changes_tilt,
-            relative_changes_pressure,
-            relative_changes_velocity
-        ])
+        return num_changes
+
+    def get_relative_number_of_changes_in_x_profile(self):
+        """Gets the relative number of changes in x profile"""
+        return self.get_number_of_changes_in_x_profile() / self.duration
+
+    def get_relative_number_of_changes_in_y_profile(self):
+        """Gets the relative number of changes in y profile"""
+        return self.get_number_of_changes_in_y_profile() / self.duration
+
+    def get_relative_number_of_changes_in_azimuth(self):
+        """Gets the relative number of changes in azimuth"""
+        return self.get_number_of_changes_in_azimuth() / self.duration
+
+    def get_relative_number_of_changes_in_tilt(self):
+        """Gets the relative number of changes in tilt"""
+        return self.get_number_of_changes_in_tilt() / self.duration
+
+    def get_relative_number_of_changes_in_pressure(self):
+        """Gets the relative number of changes in pressure"""
+        return self.get_number_of_changes_in_pressure() / self.duration
+
+    def get_relative_number_of_changes_in_velocity_profile(self):
+        """Gets the relative number of changes in velocity profile"""
+        return self.get_number_of_changes_in_velocity_profile() / self.duration
 
     @classmethod
     def _get_changes(cls, signal):
