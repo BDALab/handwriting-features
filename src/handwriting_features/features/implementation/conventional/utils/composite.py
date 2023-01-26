@@ -61,8 +61,8 @@ class WritingStopsUtils(object):
 
             # Take only pauses lasting at least 15 ms
             pause_indices = numpy.where((border_right - border_left) > num_samples)[0]
-            border_left = border_left[pause_indices].astype(numpy.float)
-            border_right = border_right[pause_indices].astype(numpy.float)
+            border_left = border_left[pause_indices].astype(float)
+            border_right = border_right[pause_indices].astype(float)
 
             # Fuze the pauses
             border_left, border_right = self._fuze_pauses(border_left, border_right, num_samples)

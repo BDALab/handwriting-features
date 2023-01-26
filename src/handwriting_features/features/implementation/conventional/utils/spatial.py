@@ -22,8 +22,8 @@ class IntersectionUtils(object):
         self.on_surface_strokes = self.sample_wrapper.on_surface_strokes
 
         # Set the number of intra-stroke and inter-stroke intersections per stroke
-        self.abs_num_intra = numpy.zeros((len(self.on_surface_strokes), 1), dtype=numpy.int)
-        self.rel_num_intra = numpy.zeros((len(self.on_surface_strokes), 1), dtype=numpy.float)
+        self.abs_num_intra = numpy.zeros((len(self.on_surface_strokes), 1), dtype=int)
+        self.rel_num_intra = numpy.zeros((len(self.on_surface_strokes), 1), dtype=float)
         self.abs_num_inter = 0
         self.rel_num_inter = 0.
 

@@ -240,7 +240,7 @@ class Statistics(object):
         # Validate input arguments
         if statistical_function not in cls.mapping:
             raise StatisticsNameNotInMappingError(f"Unsupported <statistical_function> {statistical_function}")
-        if not isinstance(array, (numpy.float, numpy.ndarray)):
+        if not isinstance(array, (float, numpy.ndarray)):
             raise UnsupportedDataForStatisticsError(
                 f"Unsupported <array> type {type(array)}; "
                 f"must be any of the following: `numpy.ndarray`, `numpy.float`")
