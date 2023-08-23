@@ -198,7 +198,7 @@ def slope_of_linear_regression(array, window_size=5, min_samples=3, center=True,
 
     # Fit the 1st order regression curve
     try:
-        fitted = numpy.polyfit(data, data, 1)
+        fitted = numpy.polyfit(list(range(len(data))), data, 1)
     except numpy.linalg.LinAlgError:
         return numpy.nan
 
