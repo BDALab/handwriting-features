@@ -14,14 +14,21 @@ class HandwritingSampleWrapper(object):
     # Handwriting data surface information
     surfaces = ("on_surface", "in_air")
 
-    def __init__(self, sample):
+    def __init__(self, sample, source=None):
         """Constructor method"""
 
         # Set the sample
         self.sample = sample
+        self.source = source
 
         # Set the strokes
         self.strokes = self.sample.get_strokes()
+
+    def __str__(self):
+        return f"{self.source}" if self.source else f"HandwritingSampleWrapper({self.sample})"
+
+    def __repr__(self):
+        return self.__str__()
 
     # ------------------------------- #
     # Alternative constructor methods #
@@ -81,7 +88,7 @@ class HandwritingSampleWrapper(object):
         :return: HandwritingSampleWrapper object
         :rtype: HandwritingSampleWrapper
         """
-        return cls(HandwritingSample.from_json(path, labels))
+        return cls(HandwritingSample.from_json(path, labels), path)
 
     @classmethod
     def from_svc(cls, path, labels=None):
@@ -95,7 +102,7 @@ class HandwritingSampleWrapper(object):
         :return: HandwritingSampleWrapper object
         :rtype: HandwritingSampleWrapper
         """
-        return cls(HandwritingSample.from_svc(path, labels))
+        return cls(HandwritingSample.from_svc(path, labels), path)
 
     # ----------------------------- #
     # Derived handwriting variables #

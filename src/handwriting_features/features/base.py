@@ -1,7 +1,15 @@
+import sys
+import logging
 import numpy
+from handwriting_features.features.configuration.settings import HandwritingFeaturesSettings
 from handwriting_features.data.descriptors.statistics import Statistics
 from handwriting_features.data.containers.sample import HandwritingSampleWrapper
-from handwriting_features.features.validation import HandwritingFeaturesValidation
+from handwriting_features.features.validation import HandwritingFeaturesFusion, HandwritingFeaturesValidation
+
+
+# Set the logging configuration
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+logger = logging.getLogger("FeatureExtractor")
 
 
 class HandwritingFeaturesBase(object):
@@ -13,6 +21,12 @@ class HandwritingFeaturesBase(object):
         # Set the sample and the extractor configuration
         self.wrapper = sample_wrapper
         self.config = config if config else {}
+
+        # Set the features to be skipped during preparation
+        self.skip_features = self.config.pop("skip_features", ("statistics", ))
+
+        # Set the logging
+        self.logging_settings = self.config.pop("logging_settings", {})
 
     # ------------------------------- #
     # Alternative constructor methods #
@@ -116,7 +130,25 @@ class HandwritingFeaturesBase(object):
     # ----------------- #
 
     @classmethod
-    def before_computation(cls, method, kwargs=None):
+    def inject_common_configuration(cls, method, kwargs, common, skip_features=None):
+        """
+        Injects the common configuration into the kwargs.
+
+        :param method: feature computation method to be applied
+        :type method: callable
+        :param kwargs: feature computation-specific kwargs
+        :type kwargs: dict
+        :param skip_features: features to be skipped during injection, defaults to None
+        :type skip_features: Any[list, tuple], optional
+        :param common: common configuration
+        :type common: dict
+        :return: kwargs
+        :rtype: dict
+        """
+        return HandwritingFeaturesFusion.fuze(method.__name__, kwargs, common, skip_features)
+
+    @classmethod
+    def before_computation(cls, method, kwargs=None, skip_features=None):
         """
         Applies the before-computation hook.
 
@@ -124,10 +156,12 @@ class HandwritingFeaturesBase(object):
         :type method: callable
         :param kwargs: feature computation-specific kwargs
         :type kwargs: dict
+        :param skip_features: features to be skipped during validation, defaults to None
+        :type skip_features: Any[list, tuple], optional
         :return: kwargs
         :rtype: dict
         """
-        return HandwritingFeaturesValidation.validate(method.__name__, kwargs, ("statistics", ))
+        return HandwritingFeaturesValidation.validate(method.__name__, kwargs, skip_features)
 
     @classmethod
     def after_computation(cls, feature, statistics=None):
@@ -155,8 +189,7 @@ class HandwritingFeaturesBase(object):
         # Return the feature
         return feature
 
-    @classmethod
-    def compute(cls, sample_wrapper, method, statistics=None, **kwargs):
+    def compute(self, sample_wrapper, method, statistics=None, **kwargs):
         """
         Applies the computation (including before-after computational hooks).
 
@@ -172,14 +205,30 @@ class HandwritingFeaturesBase(object):
         :rtype: numpy.ndarray
         """
 
+        # Prepare the method name
+        method_name = method.__name__
+
+        # Prepare the configuration
+        settings = self.inject_common_configuration(method, kwargs, self.config, self.skip_features)
+
         # Apply the before-computation hook
-        kwargs = cls.before_computation(method, kwargs)
+        settings = self.before_computation(method, settings, self.skip_features)
 
         # Apply the computation
-        features = method(sample_wrapper, **kwargs)
+        try:
+            features = method(sample_wrapper, **settings)
+        except Exception as e:
+            if self.logging_settings.get("soft_validation"):
+                logger.warning(f"Failure '{method_name}' for {sample_wrapper}: {e.__class__.__name__} - {e}")
+                if HandwritingFeaturesSettings.is_feature_multivalued(method_name):
+                    features = numpy.array([])
+                else:
+                    features = numpy.nan
+            else:
+                raise e
 
         # Apply the after-computation hook
-        features = cls.after_computation(features, statistics)
+        features = self.after_computation(features, statistics)
 
         # Return the features
         return features

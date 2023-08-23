@@ -774,6 +774,18 @@ class HandwritingFeaturesSettings(object):
     }
 
     @classmethod
+    def get_feature_arguments(cls, feature_name):
+        """
+        Gets the feature's arguments.
+
+        :param feature_name: feature name
+        :type feature_name: str
+        :return: arguments
+        :rtype: iterable
+        """
+        return cls.settings.get(feature_name, {}).get("arguments", {})
+
+    @classmethod
     def get_feature_argument_type(cls, feature_name, argument_name):
         """
         Gets the feature argument's supported type(s).
@@ -814,3 +826,15 @@ class HandwritingFeaturesSettings(object):
         :rtype: Any
         """
         return cls.settings.get(feature_name, {}).get("arguments").get(argument_name, {}).get("default")
+
+    @classmethod
+    def is_feature_multivalued(cls, feature_name):
+        """
+        Checks if the feature is multivalued.
+
+        :param feature_name: feature name
+        :type feature_name: str
+        :return: True if the feature is multivalued, False otherwise
+        :rtype: bool
+        """
+        return cls.settings.get(feature_name, {}).get("properties", {}).get("is_multi_valued", False)

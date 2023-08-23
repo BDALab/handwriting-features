@@ -1,7 +1,7 @@
 import numpy
 from handwriting_features.features import HandwritingFeatures
 from handwriting_features.features.configuration.mapping import HandwritingFeaturesMapping
-from handwriting_features.features.validation import HandwritingFeaturesValidation
+from handwriting_features.features.validation import HandwritingFeaturesFusion, HandwritingFeaturesValidation
 from handwriting_features.interface.featurizer.utils import (
     SingleSubjectFeatureUtils,
     MultiSubjectFeatureUtils,
@@ -67,18 +67,26 @@ class SingleSubjectFeatureExtractorHandler(BaseFeatureExtractorHandler):
         # Extract the features specified in the features pipeline
         for feature in pipeline:
 
+            # Get the feature name and args
+            name = feature.get("name")
+            args = feature.get("args", {})
+
+            # Prepare the feature args (fuze the feature args with the common configuration)
+            args = HandwritingFeaturesFusion.fuze(
+                feature.get("name"),
+                args,
+                features.config,
+                features.skip_features)
+
             # Get the validated feature arguments
-            arguments = cls.validation.validate(feature.get("name"), feature.get("args"))
+            arguments = cls.validation.validate(name, args)
 
             # Extract the feature
             extracted = mapping.map(feature.get("name"))(**arguments)
 
             # Update the feature values/labels
             feature_values.append(cls.utils.prepare_feature_values(extracted))
-            feature_labels.append(cls.utils.prepare_feature_labels(
-                extracted,
-                feature.get("name"),
-                feature.get("args")))
+            feature_labels.append(cls.utils.prepare_feature_labels(extracted, name, args))
 
         # Return the extracted feature values/labels
         return {
