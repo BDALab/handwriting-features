@@ -17,7 +17,7 @@ requires = [
 # Prepare the setup
 setup(
     name="handwriting-features",
-    version="1.0.7",
+    version="1.0.8",
     description="Handwriting features",
     long_description=long_description,
     long_description_content_type="text/markdown",

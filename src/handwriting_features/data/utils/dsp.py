@@ -1,5 +1,6 @@
 import scipy.signal as sc
 import numpy as np
+from handwriting_features.data.exceptions.dsp import FiltrationError
 
 
 class LowPassFilter(object):
@@ -22,7 +23,10 @@ class LowPassFilter(object):
         coefficients = sc.butter(order, cls._get_wn(cutoff, fs), btype="lowpass", analog=False, output="ba")
 
         # Filter the input signal
-        return sc.filtfilt(*coefficients, data)
+        try:
+            return sc.filtfilt(*coefficients, data)
+        except ValueError as e:
+            raise FiltrationError(f"_butter_lowpass_filter filtration failed due to {e}")
 
     @classmethod
     def _bessel_lowpass_filter(cls, data, cutoff, fs, order=10):
@@ -32,7 +36,10 @@ class LowPassFilter(object):
         coefficients = sc.bessel(order, cls._get_wn(cutoff, fs), btype="lowpass", analog=False, output="ba")
 
         # Filter the input signal
-        return sc.filtfilt(*coefficients, data)
+        try:
+            return sc.filtfilt(*coefficients, data)
+        except ValueError as e:
+            raise FiltrationError(f"_bessel_lowpass_filter filtration failed due to {e}")
 
     def filter(self, signal):
         """Filters an input signal by a low-pass filter"""
@@ -55,7 +62,10 @@ class GaussianFilter(object):
         window = window / np.sum(window)
 
         # Filter the input signal
-        return sc.filtfilt(window, 1, data)
+        try:
+            return sc.filtfilt(window, 1, data)
+        except ValueError as e:
+            raise FiltrationError(f"_custom_gaussian_filter filtration failed due to {e}")
 
     def filter(self, signal):
         """Filters an input signal by a Gaussian filter"""

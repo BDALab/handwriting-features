@@ -3,6 +3,7 @@ import functools
 from copy import deepcopy
 from handwriting_features.data.utils.math import derivation
 from handwriting_features.data.utils.dsp import LowPassFilter, GaussianFilter
+from handwriting_features.data.exceptions.dsp import FiltrationError
 from handwriting_features.features.implementation.conventional.spatial import stroke_length
 from handwriting_features.features.implementation.conventional.temporal import stroke_duration
 
@@ -241,7 +242,11 @@ class WritingNumberOfChangesUtils(object):
             velocity = numpy.array([d / t for (d, t) in zip(length, time)])
 
             # Filter the velocity by a Gaussian filter
-            velocity = self._filter_velocity_with_gaussian_filter(velocity)
+            try:
+                velocity = self._filter_velocity_with_gaussian_filter(velocity)
+            except FiltrationError:
+                print(f"Filtration error: skipping stroke {stroke}")
+                continue
 
             # Compute the number of changes
             num_changes += self._get_changes(velocity)
