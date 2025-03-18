@@ -1,4 +1,4 @@
-cff-version: 1.8.0
+cff-version: 1.9.0
 message: "If you use this software, please cite it as below."
 authors:
 - family-names: "Galaz"
@@ -14,6 +14,6 @@ authors:
   given-names: "Jiri"
   orcid: "https://orcid.org/0000-0002-6195-193X"
 title: "Handwriting features"
-version: 1.0.8
-date-released: 2023-09-07
+version: 1.0.9
+date-released: 2025-3-18
 url: "https://github.com/BDALab/handwriting-features/"
