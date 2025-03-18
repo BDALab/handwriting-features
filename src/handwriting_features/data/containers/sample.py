@@ -35,7 +35,7 @@ class HandwritingSampleWrapper(object):
     # ------------------------------- #
 
     @classmethod
-    def from_list(cls, values, labels=None):
+    def from_list(cls, values, labels=None, validate=True):
         """
         Initializes HandwritingSampleWrapper object from a list.
 
@@ -43,13 +43,15 @@ class HandwritingSampleWrapper(object):
         :type values: list
         :param labels: labels for the data values
         :type labels: list, optional
+        :param validate: true if validate input data
+        :type validate:bool
         :return: HandwritingSampleWrapper object
         :rtype: HandwritingSampleWrapper
         """
-        return cls(HandwritingSample.from_list(values, labels))
+        return cls(HandwritingSample.from_list(values, labels, validate=validate))
 
     @classmethod
-    def from_numpy_array(cls, values, labels=None):
+    def from_numpy_array(cls, values, labels=None, validate=True):
         """
         Initializes HandwritingSampleWrapper object from a numpy array.
 
@@ -57,13 +59,15 @@ class HandwritingSampleWrapper(object):
         :type values: numpy.ndarray
         :param labels: labels for the data values
         :type labels: list, optional
+        :param validate: true if validate input data
+        :type validate:bool
         :return: HandwritingSampleWrapper object
         :rtype: HandwritingSampleWrapper
         """
-        return cls(HandwritingSample.from_numpy_array(values, labels))
+        return cls(HandwritingSample.from_numpy_array(values, labels, validate=validate))
 
     @classmethod
-    def from_pandas_dataframe(cls, values, labels=None):
+    def from_pandas_dataframe(cls, values, labels=None, validate=True):
         """
         Initializes HandwritingSampleWrapper object from a pandas DataFrame.
 
@@ -71,13 +75,15 @@ class HandwritingSampleWrapper(object):
         :type values: pandas.DataFrame
         :param labels: labels for the data values
         :type labels: list, optional
+        :param validate: true if validate input data
+        :type validate:bool
         :return: HandwritingSampleWrapper object
         :rtype: HandwritingSampleWrapper
         """
-        return cls(HandwritingSample.from_pandas_dataframe(values, labels))
+        return cls(HandwritingSample.from_pandas_dataframe(values, labels, validate=validate))
 
     @classmethod
-    def from_json(cls, path, labels=None):
+    def from_json(cls, path, labels=None, validate=True):
         """
         Initializes HandwritingSampleWrapper object from a JSON file.
 
@@ -85,13 +91,15 @@ class HandwritingSampleWrapper(object):
         :type path: str
         :param labels: labels for the data values
         :type labels: list, optional
+        :param validate: true if validate input data
+        :type validate:bool
         :return: HandwritingSampleWrapper object
         :rtype: HandwritingSampleWrapper
         """
-        return cls(HandwritingSample.from_json(path, labels), path)
+        return cls(HandwritingSample.from_json(path, labels, validate=validate), path)
 
     @classmethod
-    def from_svc(cls, path, labels=None):
+    def from_svc(cls, path, labels=None, validate=True):
         """
         Initializes HandwritingSampleWrapper object from an SVC file.
 
@@ -99,10 +107,12 @@ class HandwritingSampleWrapper(object):
         :type path: str
         :param labels: labels for the data values
         :type labels: list, optional
+        :param validate: true if validate input data
+        :type validate:bool
         :return: HandwritingSampleWrapper object
         :rtype: HandwritingSampleWrapper
         """
-        return cls(HandwritingSample.from_svc(path, labels), path)
+        return cls(HandwritingSample.from_svc(path, labels, validate=validate), path)
 
     # ----------------------------- #
     # Derived handwriting variables #
