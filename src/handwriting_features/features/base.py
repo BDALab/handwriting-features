@@ -46,7 +46,7 @@ class HandwritingFeaturesBase(object):
         return cls(HandwritingSampleWrapper(sample), **config)
 
     @classmethod
-    def from_list(cls, values, labels=None, **config):
+    def from_list(cls, values, labels=None, validate=True, **config):
         """
         Initializes HandwritingFeatures object from a list.
 
@@ -54,15 +54,17 @@ class HandwritingFeaturesBase(object):
         :type values: list
         :param labels: labels for the data values
         :type labels: list, optional
+        :param validate: true if validate input data
+        :type validate:bool
         :param config: common configuration
         :type config: **kwargs
         :return: HandwritingFeatures object
         :rtype: HandwritingFeatures
         """
-        return cls(HandwritingSampleWrapper.from_list(values, labels), **config)
+        return cls(HandwritingSampleWrapper.from_list(values, labels, validate=validate), **config)
 
     @classmethod
-    def from_numpy_array(cls, values, labels=None, **config):
+    def from_numpy_array(cls, values, labels=None, validate=True, **config):
         """
         Initializes HandwritingFeatures object from a numpy array.
 
@@ -70,15 +72,17 @@ class HandwritingFeaturesBase(object):
         :type values: numpy.ndarray
         :param labels: labels for the data values
         :type labels: list, optional
+        :param validate: true if validate input data
+        :type validate:bool
         :param config: common configuration
         :type config: **kwargs
         :return: HandwritingFeatures object
         :rtype: HandwritingFeatures
         """
-        return cls(HandwritingSampleWrapper.from_numpy_array(values, labels), **config)
+        return cls(HandwritingSampleWrapper.from_numpy_array(values, labels, validate=validate), **config)
 
     @classmethod
-    def from_pandas_dataframe(cls, values, labels=None, **config):
+    def from_pandas_dataframe(cls, values, labels=None, validate=True, **config):
         """
         Initializes HandwritingFeatures object from a pandas DataFrame.
 
@@ -86,15 +90,17 @@ class HandwritingFeaturesBase(object):
         :type values: pandas.DataFrame
         :param labels: labels for the data values
         :type labels: list, optional
+        :param validate: true if validate input data
+        :type validate:bool
         :param config: common configuration
         :type config: **kwargs
         :return: HandwritingFeatures object
         :rtype: HandwritingFeatures
         """
-        return cls(HandwritingSampleWrapper.from_pandas_dataframe(values, labels), **config)
+        return cls(HandwritingSampleWrapper.from_pandas_dataframe(values, labels, validate=validate), **config)
 
     @classmethod
-    def from_json(cls, path, labels=None, **config):
+    def from_json(cls, path, labels=None, validate=True, **config):
         """
         Initializes HandwritingFeatures object from a JSON file.
 
@@ -102,15 +108,17 @@ class HandwritingFeaturesBase(object):
         :type path: str
         :param labels: labels for the data values
         :type labels: list, optional
+        :param validate: true if validate input data
+        :type validate:bool
         :param config: common configuration
         :type config: **kwargs
         :return: HandwritingFeatures object
         :rtype: HandwritingFeatures
         """
-        return cls(HandwritingSampleWrapper.from_json(path, labels), **config)
+        return cls(HandwritingSampleWrapper.from_json(path, labels, validate=validate), **config)
 
     @classmethod
-    def from_svc(cls, path, labels=None, **config):
+    def from_svc(cls, path, labels=None, validate=True, **config):
         """
         Initializes HandwritingFeatures object from an SVC file.
 
@@ -118,12 +126,14 @@ class HandwritingFeaturesBase(object):
         :type path: str
         :param labels: labels for the data values
         :type labels: list, optional
+        :param validate: true if validate input data
+        :type validate:bool
         :param config: common configuration
         :type config: **kwargs
         :return: HandwritingFeatures object
         :rtype: HandwritingFeatures
         """
-        return cls(HandwritingSampleWrapper.from_svc(path, labels), **config)
+        return cls(HandwritingSampleWrapper.from_svc(path, labels, validate=validate), **config)
 
     # ----------------- #
     # Computation hooks #
